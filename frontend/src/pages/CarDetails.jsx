@@ -6,7 +6,7 @@ import Helmet from "../components/Helmet/Helmet";
 import { useParams, useNavigate } from "react-router-dom";
 import BookingForm from "../components/UI/BookingForm";
 import PaymentMethod from "../components/UI/PaymentMethod";
-// import { useDispatch} from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { format, toDate } from 'date-fns'
 import axios from 'axios';
 import SentimentDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentDissatisfiedOutlined';
@@ -27,7 +27,7 @@ const CarDetails = () => {
   const id2 = useParams()
   const [update, setUpdate] = useState(false)
   const navigate = useNavigate()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const [bookStatus , setBookStatus] = useState(false)
   const [pageRender , setPageRender] = useState(false)
   const [DateAvailability , SetDateAvailability] = useState(false)
@@ -50,14 +50,14 @@ const CarDetails = () => {
           setCarData(responce.data)
           setDummyAmount(responce.data.price)
           setCarID(responce.data._id)
-          // dispatch({
-          //   type:'lattitude',
-          //   payload:responce.data.latitude
-          // })
-          // dispatch({
-          //   type:'longitude',
-          //   payload:responce.data.longitude
-          // })
+          dispatch({
+            type:'lattitude',
+            payload:responce.data.latitude
+          })
+          dispatch({
+            type:'longitude',
+            payload:responce.data.longitude
+          })
         })
 
     } catch (error) {
@@ -75,25 +75,25 @@ const CarDetails = () => {
   const totalAmount = dummyAmount*count
 
 
-    // dispatch({
-    //   type:'CarDetails',
-    //   payload:carData
-    // })  
+    dispatch({
+      type:'CarDetails',
+      payload:carData
+    })  
 
-    // dispatch({
-    //   type:'date',
-    //   payload:val
-    // })
+    dispatch({
+      type:'date',
+      payload:val
+    })
   
-    // dispatch({
-    //   type:'endDate',
-    //   payload:val2
-    // })
+    dispatch({
+      type:'endDate',
+      payload:val2
+    })
     
-    // dispatch({
-    //   type:'Total',
-    //   payload:totalAmount
-    // })
+    dispatch({
+      type:'Total',
+      payload:totalAmount
+    })
 
     // var test = false;
 

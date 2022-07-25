@@ -19,7 +19,10 @@
     "joi-password-complexity": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.4",
+    "nodemailer": "^6.7.7",
     "nodemon": "^2.0.19",
+    "razorpay": "^2.8.2",
+    "shortid": "^2.2.16",
     "twilio": "^3.79.0"
   }
 }

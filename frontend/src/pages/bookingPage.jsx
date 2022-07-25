@@ -1,11 +1,12 @@
 import { Box, Container, Typography  ,Grid, Paper, Button} from '@mui/material'
+import Helmet from "../components/Helmet/Helmet";
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { useNavigate ,useParams} from 'react-router-dom'
 // import Coupon from '../../Components/Coupon/Coupon';
 import axios from 'axios';
-// import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import Chip from '@mui/material/Chip';  
 // import {PayPalButton} from 'react-paypal-button-v2'
 import Modal from '@mui/material/Modal';
@@ -28,8 +29,8 @@ const style = {
 };
 
 
-//  const  RAZKEYID = 'rzp_test_Ajy1fAmnCU0iHJ'
-// const RAZSECRETKEY = 'W3av1yexpQ421vNuaH1MQH9W'
+ const  RAZKEYID = 'rzp_test_01xxpPseANbvFg'
+const RAZSECRETKEY = 'ZTuvlVd8WS0kW6mEbmdFKKnl'
 
 
 function loadScript(src){
@@ -62,6 +63,7 @@ const IDinfo = id2.id
     const USERNAME = userId.name
     const USERID =  userId._id
     const USEREMAIL = userId.email
+    const USERPHONE = userId.phone
 
 
   // console.log(USEREMAIL);
@@ -114,66 +116,62 @@ const IDinfo = id2.id
 
 
 
-// async function showRazorpay() {
-//   const res = await loadScript(
-//     "https://checkout.razorpay.com/v1/checkout.js"
-//   );
-//   if(!res){
-//     alert("Razorpay SDK failed to load . Are you online?");
-//     return
-//   }
+async function showRazorpay() {
+  const res = await loadScript(
+    "https://checkout.razorpay.com/v1/checkout.js"
+  );
+  if(!res){
+    alert("Razorpay SDK failed to load . Are you online?");
+    return
+  }
 
-//   const data = await axios.post('/api/user/razorpay')
+  const data = await axios.post('http://localhost:5000/api/user/razorpay')
 
-//   // console.log(data);
+  // console.log(data);
 
-//   // const amount = data.amount
+  // const amount = data.amount
 
-//   // console.log(amount);
+  // console.log(amount);
 
-//   const options = {
-//     key:RAZKEYID,
-//     currency: data.currency,
-//     amount: amount*100,
-//     order_id: data.id,
-//     name: "RoadSter Car Booking",
-//     description: "Your Car has been booked",
-//     handler:function (responce){
+  const options = {
+    key:RAZKEYID,
+    currency: data.currency,
+    amount: amount*100,
+    order_id: data.id,
+    name: "Gauto Car Booking",
+    description: "Your Car has been booked",
+    handler:function (response){
 
-//       axios.post(`/api/user/razorpaysuccess/${id2.id}`,{
-//         couponId,couponCode,start,end,USERNAME,USERID,carName,amount,USEREMAIL
-//       }).then((res)=>{
-//         // console.log(res.data.message);
-//         navigate('/bookingsuccess')
-//       })
+      axios.post(`http://localhost:5000/api/user/razorpaysuccess/${id2.id}`,{
+        start,end,USERNAME,USERID,carName,amount,USEREMAIL
+      }).then((res)=>{
+        // console.log(res.data.message);
+        navigate('/bookingsuccess')
+      })
 
-//       // alert("transaction successfull")
+      // alert("transaction successfull")
 
-//     },
-//     prefill:{
-//       name:USERNAME,
-//       email:USEREMAIL,
-//       phone_number:"7559017884"
-//     }
-//   };
-//   const paymentObject = new window.Razorpay(options);
-//   paymentObject.open();
+    },
+    prefill:{
+      name:USERNAME,
+      email:USEREMAIL,
+      phone_number: USERPHONE
+    }
+  };
+  const paymentObject = new window.Razorpay(options);
+  paymentObject.open();
 
-// }
+}
 
 // const susscesPaypalHandle = (paymentResult) => {
 //   console.log(paymentResult);
-//   axios.post(`/api/user/razorpaysuccess/${id2.id}`,{
-//     couponId,couponCode,start,end,USERNAME,USERID,carName,amount,USEREMAIL
+//   axios.post(`http://localhost:5000/api/user/razorpaysuccess/${id2.id}`,{
+//     start,end,USERNAME,USERID,carName,amount,USEREMAIL
 //   }).then((res)=>{
 //     // console.log(res.data.message);
 //     navigate('/bookingsuccess')
 //   })
 // }
-
-
-
-
 
 
 
@@ -205,14 +203,9 @@ const IDinfo = id2.id
     }
   
   return (
-    <div style={{marginBottom:'30rem'}}>
-        {/* <AppBarHeader/> */}
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+    <Helmet title="booking">
+    <div style={{marginBottom:'30rem', marginTop:'10rem'}}>
+        
        <Container>
 
        <Modal
@@ -226,7 +219,7 @@ const IDinfo = id2.id
             Payment Options
           </Typography>
           <Box sx={{ width: '100%', typography: 'body1' ,marginTop:2}}>
-          {/* <Button variant='outlined'  onClick={showRazorpay} sx={{width:'100%',height:50}}   > <Icon icon="simple-icons:razorpay" /> Razorpay</Button> */}
+          <Button variant='outlined'  onClick={showRazorpay} sx={{width:'100%',height:50}}   > <Icon icon="simple-icons:razorpay" /> Razorpay</Button>
         
         <Box mt={2}>
         {/* <PayPalButton amount={amount}  onSuccess={susscesPaypalHandle}  /> */}
@@ -242,7 +235,7 @@ const IDinfo = id2.id
             <Paper elevation={3} sx={{minHeight:144}} >
             <Box sx={{justifyContent:'center',display:'flex',paddingTop:6}} >
                 <Typography variant='h5' component='h5' >
-                 Car: {carName}
+                 Car: {cardata.brand}
                 </Typography>
               </Box>
                 </Paper>
@@ -367,6 +360,7 @@ const IDinfo = id2.id
        
 
     </div>
+    </Helmet>
   )
 }
 

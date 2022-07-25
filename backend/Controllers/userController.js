@@ -2,9 +2,14 @@ const User = require("../Model/userModel/userModel");
 const asyncHandler = require("express-async-handler");
 require('dotenv').config()
 const generateToken = require("../Unitl/jwt");
+const Razorpay = require('razorpay')
+const shortid = require("shortid");
+var nodemailer = require('nodemailer');
 const AddCar = require('../Model/carModel/carModel')
 const districtSchema = require('../Model/districtModel/districtModel')
 const Booking = require("../Model/bookingModel/bookingModel");
+
+var instance = new Razorpay({ key_id: process.env.RAZKEYID , key_secret: process.env.RAZSECRETKEY})
 
 const serviceSID =  process.env.SERVICESID
 const AccountSID = process.env.ACCOUNTSID
@@ -322,7 +327,7 @@ const checkdate = asyncHandler(async(req,res)=>{
 
 // booking
 
-const bookingdata =asyncHandler(async(req,res)=>{
+const bookingdata = asyncHandler(async(req,res)=>{
   // console.log(req.body.userId);
 
   const userId = req.body.userId
@@ -344,5 +349,112 @@ const bookingdata =asyncHandler(async(req,res)=>{
 
 })
 
+// payment integration
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getdistrict, searchdistrict, GetSingleCar, checkdate, bookingdata}
+const razorpay = asyncHandler(async(req,res)=>{
+  const payment_capture = -1;
+  const amount = 500;
+  const currency = "INR";
+
+  const option = {
+    amount,
+    currency,
+    receipt:shortid.generate(),
+    payment_capture,
+  };
+
+
+  try {
+    const response = await instance.orders.create(option)
+    console.log(response);
+    res.status(200).json({
+      id:response.id,
+      currency:response.currency,
+    })
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+const razorpaysuccess = asyncHandler(async(req,res)=>{
+  // console.log(req.body);
+
+  // console.log("enterd");
+
+  const couponId = req.body.couponId;
+  const couponCode = req.body.couponCode;
+  const startData = req.body.start;
+  const endData = req.body.end;
+  const userId = req.body.USERID;
+  const userName = req.body.USERNAME;
+  const carName = req.body.carName;
+  const amount = req.body.amount
+  const carId = req.params.id
+  const useremail = req.body.USEREMAIL
+  // console.log(couponId , couponCode , userId );
+  // console.log(startData , endData , userId , userName , carName , carId , amount);
+
+try {
+  
+  if(couponId && couponCode ){
+    const couponstore = await AppliedCoupon.create({'UserId':userId,'CouponCode':couponCode})
+  }
+  // console.log(couponstore);
+
+
+  const BookingStore = await Booking.create({'carId':carId,'userId':userId,'username':userName,'carname':carName,'cancel':false,'complete':false,'startDate':startData,'endDate':endData,'PayedAmount':amount})
+
+    console.log(BookingStore);
+
+
+  // if(IncCount){
+  //   const UpdateCount = await AddCar.updateOne()
+
+  //   console.log(UpdateCount);
+  // }
+
+  // console.log(IncCount);
+  if(BookingStore){
+    const IncCount = await AddCar.findOneAndUpdate({"_id":carId},{$inc:{Bookingcount:1}})
+
+
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.NODEMAIL_EMAIL,
+        pass: process.env.NODEMAIL_PASSWORD
+      }
+    });
+
+    var mailOptions = {
+      from: 'gautopvt@gmail.com',
+      to: useremail,
+      subject: "Gauto Car Rental Booking Service",
+      text: `Hello ${userName} Thank you for using Gauto for your personal car rental service . Your have successfully booked ${carName} from our website . You can use the car from ${startData} to ${endData} Thank You For using Gauto Car Rental pvt and have a great day!!`
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+       
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.send("Email sented")
+      }
+    });
+  }
+
+  res.status(200).json({
+    message:"Successfully Booked"
+  })
+} catch (error) {
+  res.status(400).json({
+    message:"Something wrong happend when we try to book.."
+  })
+}
+  // console.log(BookingStore);
+
+})
+
+
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getdistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess}

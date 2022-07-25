@@ -10,7 +10,7 @@ const appreducer = combineReducers({
     // Discount:DiscountAmount,
     // DisAll:DiscountAllData,
     // msg:CouponMsg,
-    // lat:Lattitude,
+    lat:Lattitude,
     lng:Longitude
 })
 
