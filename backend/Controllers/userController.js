@@ -349,7 +349,7 @@ const bookingdata = asyncHandler(async(req,res)=>{
 
 })
 
-// payment integration
+// payment integration - razorpay
 
 const razorpay = asyncHandler(async(req,res)=>{
   const payment_capture = -1;
@@ -381,8 +381,6 @@ const razorpaysuccess = asyncHandler(async(req,res)=>{
 
   // console.log("enterd");
 
-  const couponId = req.body.couponId;
-  const couponCode = req.body.couponCode;
   const startData = req.body.start;
   const endData = req.body.end;
   const userId = req.body.USERID;
@@ -456,5 +454,11 @@ try {
 
 })
 
+// paypal
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getdistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess}
+const paypal = asyncHandler(async(req,res)=>{
+  res.send(process.env.PAYPAL_CLIENT_ID) 
+})
+
+
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getdistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal}

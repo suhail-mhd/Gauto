@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const User = require('../Model/userModel/userModel')
 const AddCar = require('../Model/carModel/carModel')
 const districtSchema = require('../Model/districtModel/districtModel');
+const Booking = require("../Model/bookingModel/bookingModel");
 
 // login route
 
@@ -258,6 +259,51 @@ const deleteDistrict = asyncHandler(async(req,res)=>{
 
 })
 
+// booking management
+
+const adminbookingdata = asyncHandler(async(req,res)=>{
+    
+
+    const data = await Booking.find({})
+
+    // console.log(data);
+
+    if(data){
+        res.status(200).json({
+            data
+        })
+    }else{
+        res.status(400).json({
+            message:"something went wrong while getting whole booking data"
+        })
+    }
+
+})
+
+const completed = asyncHandler(async(req,res)=>{
+    const id = req.params.id
+
+    const Complete = {
+        complete:true
+    }
+
+    const data = await Booking.findByIdAndUpdate(id,Complete,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false
+      })
 
 
-module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict }
+      if(data){
+          res.status(200).json({
+              Message:"Trip Completed"
+          })
+      }else{
+          res.status(400).json({
+              message:"Something went wrong while trying to complete trip"
+          })
+      }
+})
+
+
+module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict, adminbookingdata, completed }

@@ -16,8 +16,8 @@ import { useNavigate } from "react-router-dom";
 import Popper from "@mui/material/Popper";
 import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
-// import District from "../DistrictSelecting/District";
-// import { useSelector } from "react-redux";
+import District from "../DistrictSelecting/District";
+import { useSelector } from "react-redux";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -55,7 +55,7 @@ function Cards() {
 
   const userInfo = localStorage.getItem("userInfo");
   const value = JSON.parse(userInfo);
-    // const DistrictSort = useSelector((state) => state.DisSort);
+    const DistrictSort = useSelector((state) => state.DisSort);
 
   const Datas = () => {
     if (userInfo) {
@@ -110,7 +110,7 @@ function Cards() {
         });
       SetSearchData(true);
     } catch (error) {
-      console.log("error occured while searching", error);
+      console.log("error occurred while searching", error);
     }
   };
 
@@ -123,7 +123,7 @@ function Cards() {
       SetLowToHigh(true);
       SetHighToLow(false);
     } catch (error) {
-      console.log("error occured while sorting", error);
+      console.log("error occurred while sorting", error);
     }
   };
 
@@ -189,11 +189,12 @@ function Cards() {
             </Box>
           </Grid>
 
-          {/* <Grid sm={12} xs={12} md={6} lg={4} xl={4}>
+          <Grid sm={12} xs={12} md={6} lg={4} xl={4}>
+            
             <Box sx={{ marginTop: 1, marginLeft: 4, maxWidth: 400 }}>
               <District />
             </Box>
-          </Grid> */}
+          </Grid>
 
           <Grid></Grid>
 
@@ -249,7 +250,7 @@ function Cards() {
                   >
                     <CardMedia
                       component="img"
-                      alt="green iguana"
+                      alt="cars"
                       height="140"
                       style={{ height: 300, objectFit: "contain" }}
                       key={index}
@@ -335,7 +336,7 @@ function Cards() {
                   >
                     <CardMedia
                       component="img"
-                      alt="green iguana"
+                      alt="cars"
                       height="140"
                       key={index}
                       style={{ height: 300, objectFit: "contain" }}
@@ -421,7 +422,7 @@ function Cards() {
                   >
                     <CardMedia
                       component="img"
-                      alt="green iguana"
+                      alt="cars"
                       height="140"
                       key={index}
                       style={{ height: 300, objectFit: "contain" }}
@@ -491,95 +492,95 @@ function Cards() {
             })}
           </Grid>
         ) 
-        // : DistrictSort.length > 0 ? (
-        //   <Grid container>
-        //     {DistrictSort.slice(0, visible).map((obj, index) => {
-        //       return (
-        //         <Grid item xl={3} lg={4} md={4} sm={6} xs={12} key={index}>
-        //           <Card
-        //             sx={{ maxWidth: 345 }}
-        //             style={{
-        //               margin: 15,
-        //               Height: "auto",
-        //               position: "relative",
-        //               minHeight: 600,
-        //             }}
-        //             className="card"
-        //           >
-        //             <CardMedia
-        //               component="img"
-        //               alt="green iguana"
-        //               height="140"
-        //               key={index}
-        //               style={{ height: 300, objectFit: "contain" }}
-        //               image={obj.imgUrl}
-        //             />
-        //             <CardContent>
-        //               <div
-        //                 style={{
-        //                   display: "flex",
-        //                   justifyContent: "space-between",
-        //                 }}
-        //               >
-        //                 <Typography gutterBottom variant="h5" component="div">
-        //                   {obj.brand} {obj.model}
-        //                   {/* <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />}   /> */}
-        //                 </Typography>
+        : DistrictSort.length > 0 ? (
+          <Grid container>
+            {DistrictSort.slice(0, visible).map((obj, index) => {
+              return (
+                <Grid item xl={3} lg={4} md={4} sm={6} xs={12} key={index}>
+                  <Card
+                    sx={{ maxWidth: 345 }}
+                    style={{
+                      margin: 15,
+                      Height: "auto",
+                      position: "relative",
+                      minHeight: 600,
+                    }}
+                    className="card"
+                  >
+                    <CardMedia
+                      component="img"
+                      alt="cars"
+                      height="140"
+                      key={index}
+                      style={{ height: 300, objectFit: "contain" }}
+                      image={obj.imgUrl}
+                    />
+                    <CardContent>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography gutterBottom variant="h5" component="div">
+                          {obj.brand} {obj.model}
+                          {/* <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />}   /> */}
+                        </Typography>
 
-        //                 <Typography gutterBottom variant="h6" component="div">
-        //                   ${obj.price}/day
-        //                 </Typography>
-        //               </div>
-        //               {obj.OfferStatus ? (
-        //                 <Box sx={{ display: "flex" }}>
-        //                   <Typography
-        //                     gutterBottom
-        //                     variant="BUTTON TEXT"
-        //                     component="div"
-        //                   >
-        //                     Orginal Price :
-        //                   </Typography>
-        //                   <Typography
-        //                     style={{ textDecoration: "line-through" }}
-        //                     variant="subtitle2"
-        //                   >
-        //                     ${obj.prevAmount}
-        //                   </Typography>
-        //                 </Box>
-        //               ) : null}
-        //               <Typography variant="subtitle2" color="text.secondary">
-        //                 Available in :{obj.location}
-        //               </Typography>
-        //               <Typography
-        //                 variant="body2"
-        //                 color="text.secondary"
-        //                 marginTop={1}
-        //               >
-        //                 {obj.description}
-        //               </Typography>
-        //             </CardContent>
-        //             <CardActions style={{ bottom: 0, position: "absolute" }}>
-        //               <Button
-        //                 className="btn"
-        //                 onClick={() => navigate(`/productpage/${obj._id}`)}
-        //                 style={{
-        //                   color: "white",
-        //                   margin: 10,
-        //                   backgroundColor: "#016DD9",
-        //                 }}
-        //               >
-        //                 BOOK NOW
-        //               </Button>
+                        <Typography gutterBottom variant="h6" component="div">
+                          ${obj.price}/day
+                        </Typography>
+                      </div>
+                      {obj.OfferStatus ? (
+                        <Box sx={{ display: "flex" }}>
+                          <Typography
+                            gutterBottom
+                            variant="BUTTON TEXT"
+                            component="div"
+                          >
+                            Orginal Price :
+                          </Typography>
+                          <Typography
+                            style={{ textDecoration: "line-through" }}
+                            variant="subtitle2"
+                          >
+                            ${obj.prevAmount}
+                          </Typography>
+                        </Box>
+                      ) : null}
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Available in :{obj.location}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        marginTop={1}
+                      >
+                        {obj.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions style={{ bottom: 0, position: "absolute" }}>
+                      <Button
+                        className="btn"
+                        onClick={() => navigate(`/productpage/${obj._id}`)}
+                        style={{
+                          color: "white",
+                          margin: 10,
+                          backgroundColor: "#016DD9",
+                        }}
+                      >
+                        BOOK NOW
+                      </Button>
 
-        //               {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Remove from wishlist</Button>    */}
-        //               {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Add to wishlist</Button>   */}
-        //             </CardActions>
-        //           </Card>
-        //         </Grid>
-        //       );
-        //     })}
-        //   </Grid>
-        // ) 
+                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Remove from wishlist</Button>    */}
+                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Add to wishlist</Button>   */}
+                    </CardActions>
+                  </Card>
+                </Grid>
+              );
+            })}
+          </Grid>
+        ) 
         : (
           <Grid container>
             {carsData.slice(0, visible).map((obj, index) => {
@@ -597,7 +598,7 @@ function Cards() {
                   >
                     <CardMedia
                       component="img"
-                      alt="green iguana"
+                      alt="cars"
                       height="140"
                       key={index}
                       style={{ height: 300, objectFit: "contain" }}

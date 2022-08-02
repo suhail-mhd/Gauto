@@ -10,6 +10,7 @@
     "@mui/material": "^5.9.0",
     "@mui/x-date-pickers": "^5.0.0-beta.2",
     "@mui/x-date-pickers-pro": "^5.0.0-beta.2",
+    "@paypal/react-paypal-js": "^7.8.1",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",

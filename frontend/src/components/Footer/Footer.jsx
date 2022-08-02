@@ -30,13 +30,16 @@ const quickLinks = [
   },
 ];
 
-const Footer = () => {
+const Footer = (props) => {
   const date = new Date();
   const year = date.getFullYear();
   return (
     <footer className="footer">
+      
+      
       <Container>
         <Row>
+        {props.admin ? null:
           <Col lg="4" md="4" sm="12">
             <div className="logo footer__logo">
               <h1>
@@ -49,6 +52,7 @@ const Footer = () => {
             Are you looking to rent a car in Kerala? Then, you have come to the right place. Gauto, the premium rental services provides car booking in Kochi and other locations of the state. With attractive prices, our car rental services remove those frustrating transport woes from the minds of NRIs and tourists.
             </p>
           </Col>
+}
 
           <Col lg="2" md="4" sm="6">
             <div className="mb-4">

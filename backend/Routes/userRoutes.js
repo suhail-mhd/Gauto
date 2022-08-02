@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getdistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess} = require('../Controllers/userController')
+const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getdistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal} = require('../Controllers/userController')
 
 router.route('/signup').post(RegisterUser)  
 
@@ -31,6 +31,8 @@ router.route('/bookingdata').post(bookingdata)
 router.route('/razorpay').post(razorpay)
 
 router.route('/razorpaysuccess/:id').post(razorpaysuccess)
+
+router.route('/paypal').get(paypal)
 
 
 module.exports = router;

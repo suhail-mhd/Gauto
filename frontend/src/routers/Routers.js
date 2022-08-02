@@ -17,10 +17,11 @@ import AdminDashboard from "../pages/adminDashboard/adminDashboard";
 import UserManagement from "../pages/adminUserManagment/UserManagment";
 import AddCars from "../pages/addCars/addCars";
 import CarManagement from "../pages/carManagement/carManagement";
-import DistrictManagement from "../pages/districtManagement/districtMnagement";
+import DistrictManagement from "../pages/districtManagement/districtManagement";
 import BookingPage from "../pages/bookingPage";
 import BookingSuccess from "../pages/bookingSuccess/bookingSuccess";
 import BookingHistory from "../pages/BookingHistory";
+import AdminBooking from "../pages/adminBookingManagement/bookingManagement";
 
 const Routers = () => {
   return (
@@ -43,6 +44,7 @@ const Routers = () => {
       <Route path='/admin/addcars' element={<AddCars/>} />
       <Route path='/admin/carManagement' element={<CarManagement/>} />
       <Route path='/admin/districtManagement' element={<DistrictManagement/>} />
+      <Route path='/admin/booking'  element={<AdminBooking/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
       // </Provider>

@@ -539,6 +539,7 @@ function CarManagement() {
       </Modal>
       {/* modal edn */}
       <Box sx={{ flexGrow: 1, paddingLeft: 40 }}>
+      <Typography variant='h4' component='h6' marginLeft={10} fontWeight={'bold'} marginBottom={10} >Car Management</Typography>
         <div style={{ justifyContent: "end" }}>
           <Link to="/admin/addcars">
             <Button variant="contained">ADD CAR</Button>
