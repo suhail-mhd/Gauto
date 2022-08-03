@@ -121,7 +121,7 @@ function SideBar(props) {
           </Link>
       </List>
       <Divider />
-      <Link to='/admin/offermanagement' style={{textDecoration:'none' ,color:'black'}} >
+      <Link to='/admin/offerManagement' style={{textDecoration:'none' ,color:'black'}} >
       <List>
           <ListItem button >
             <ListItemIcon>

@@ -22,6 +22,8 @@ import BookingPage from "../pages/bookingPage";
 import BookingSuccess from "../pages/bookingSuccess/bookingSuccess";
 import BookingHistory from "../pages/BookingHistory";
 import AdminBooking from "../pages/adminBookingManagement/bookingManagement";
+import Profile from "../pages/profile";
+import OfferManagement from "../pages/offerManagement/offerManagement";
 
 const Routers = () => {
   return (
@@ -36,6 +38,7 @@ const Routers = () => {
       <Route path="/productpage/:id" element={<CarDetails />} />
       <Route path="/booking/:id" element={<BookingPage />} />
       <Route path='/bookingsuccess' element={<BookingSuccess/>} />
+      <Route path='/profile/:id'  element={<Profile/>} />
       <Route path='/bookinghistory' element={<BookingHistory/>} />
       <Route path="/contact" element={<Contact />} />
       <Route path='/admin' element={<AdminLogin/>} />
@@ -45,6 +48,7 @@ const Routers = () => {
       <Route path='/admin/carManagement' element={<CarManagement/>} />
       <Route path='/admin/districtManagement' element={<DistrictManagement/>} />
       <Route path='/admin/booking'  element={<AdminBooking/>} />
+      <Route path='/admin/offerManagement' element={<OfferManagement/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
       // </Provider>

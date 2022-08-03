@@ -37,7 +37,7 @@ function DistrictManagement() {
     const handleClose = () => setOpen(false);
     
 
-    const distrcitHandler = () => {
+    const districtHandler = () => {
         
         try {
             axios.post('http://localhost:5000/api/admin/addDistrict',{district}).then((res)=>{
@@ -129,7 +129,7 @@ function DistrictManagement() {
                 <div style={{marginLeft:570}} >
             <TextField id="outlined-basic" label="Distrcit" variant="outlined" sx={{width:350}} onChange={(e)=>setDistrict(e.target.value)}  />
             <br/>
-            <Button onClick={distrcitHandler} variant='contained' sx={{width:200 ,marginTop:2,marginLeft:19}} >Add District</Button>
+            <Button onClick={districtHandler} variant='contained' sx={{width:200 ,marginTop:2,marginLeft:19}} >Add District</Button>
             </div>  
            
             </Box>

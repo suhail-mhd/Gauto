@@ -5,6 +5,7 @@ const User = require('../Model/userModel/userModel')
 const AddCar = require('../Model/carModel/carModel')
 const districtSchema = require('../Model/districtModel/districtModel');
 const Booking = require("../Model/bookingModel/bookingModel");
+const Offer = require('../Model/offerModel/offerModel');
 
 // login route
 
@@ -305,5 +306,85 @@ const completed = asyncHandler(async(req,res)=>{
       }
 })
 
+const districtOffer = asyncHandler(async(req,res)=>{
+    const location = req.body.selectDistrict
+    const offername = req.body.offerName
+    const offerPrice = req.body.offerPrice
 
-module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict, adminbookingdata, completed }
+    // console.log(location , offername , offerPrice);
+
+
+    const data = await Offer.create({"District":location,"OfferName":offername,"OfferPrice":offerPrice})
+
+    const carData = await AddCar.find({"location":location}).collation( { locale: 'en', strength: 2 } )
+
+    console.log(carData);
+    carData.map(async(obj)=>{
+        let amount = obj.price
+         let data = amount-offerPrice
+        // console.log(data);
+
+        let offerEnable = await AddCar.updateOne({"_id":obj._id},{$set:{"OfferStatus":true,"prevAmount":amount,"price":data}},{
+            new:true,
+            runValidators:true,
+            useFindAndModify:false
+        }).collation( { locale: 'en', strength: 2 } )
+
+        // console.log(offerEnable);
+
+    })
+
+   
+})
+
+const getOffer = asyncHandler(async(req,res)=>{
+    
+
+    const data = await Offer.find({})
+
+
+    if(data){
+        res.status(200).json({
+            data
+        })
+    }else{
+        res.status(400).json({
+            message:"Something went wrong while getting offer data"
+        })
+    }
+
+})
+
+
+const deleteOffer = asyncHandler(async(req,res)=>{
+    // console.log(req.params.id);
+
+    const id = req.body.deleteId
+    const district = req.body.deleteDistrict
+    // console.log(id);
+    // console.log(district);
+
+    const carData = await AddCar.find({"location":district}).collation( { locale: 'en', strength: 2 } )
+
+    carData.map(async(obj)=>{
+        const amount = obj.prevAmount
+        // console.log(amount);
+        const offerDisable = await AddCar.updateOne({"_id":obj._id},{$set:{"OfferStatus":false,"price":amount,"prevAmount":0}}).collation( { locale: 'en', strength: 2 } )
+
+        // console.log(offerDisable);
+        
+    })
+
+
+    const offerDelete = await Offer.findById({"_id":id})
+    await offerDelete.delete()
+    // console.log(offerDisable);
+
+    
+    res.status(200).json({
+        message:"You data have been deleted"
+    })
+})
+
+
+module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict, adminbookingdata, completed, districtOffer, getOffer, deleteOffer }

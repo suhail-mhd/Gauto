@@ -237,7 +237,7 @@ const hightolow = asyncHandler(async(req,res)=>{
 
 // filter by district
 
-const getdistrict =  asyncHandler(async(req,res)=>{
+const getDistrict =  asyncHandler(async(req,res)=>{
 
   const Getdistrict = await districtSchema.find({})
 
@@ -460,5 +460,94 @@ const paypal = asyncHandler(async(req,res)=>{
   res.send(process.env.PAYPAL_CLIENT_ID) 
 })
 
+// profile
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getdistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal}
+const getProfileUserData = asyncHandler(async(req,res)=>{
+  // console.log(req.params.id);
+  const id = req.params.id
+
+  const user = await User.findById({"_id":id})
+
+  if(user){
+    res.status(200).json({
+      user
+    })
+  }else{
+    res.status(400).send("error while getting data from database in profile")
+  }
+
+})
+
+
+const userUpdate = asyncHandler(async(req,res)=>{
+  // console.log(req.body);
+  const userId = req.params.id
+  // console.log(userId);
+
+
+  const data={
+    name:req.body.name,
+    email:req.body.email,
+    phone:req.body.phone,
+    gender:req.body.gender,
+    district:req.body.district,
+    age:req.body.age,
+    address:req.body.address
+  }
+
+  // console.log(data);
+
+
+  try {
+    const carsData = await User.findByIdAndUpdate(userId,data,{
+      new:true,
+      runValidators:true,
+      useFindAndModify:false
+  })
+
+  res.status(200).json({message:"Data Updated"})
+
+  } catch (error) {
+      res.status(400).json({message:"Data Not Found"})
+  }
+})
+
+
+const passwordReset = asyncHandler(async(req,res)=>{
+  // console.log(req.params.id);
+  const id = req.params.id
+  const passwordText = req.body.password
+  const saltRounds = 10;
+ 
+
+  const bcryptPassword = await bcrypt.hash(passwordText , saltRounds)
+
+  console.log(bcryptPassword);
+
+
+
+
+  const password = {
+    password:bcryptPassword
+  }
+
+
+try {
+  const data = await User.findByIdAndUpdate(id,password,{
+    new:true,
+    runValidators:true,
+    useFindAndModify:false
+  })
+
+  res.status(200).json({
+    message:"Password Reset Successfully"
+  })
+} catch (error) {
+  res.status(400).json({
+    message:"Password reset Failed"
+  })
+}
+
+})
+
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset}

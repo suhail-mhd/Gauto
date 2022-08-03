@@ -47,7 +47,7 @@ const Header = (props) => {
   const menuRef = useRef(null);
   const [logout, setLogout] = useState(false);
   const [userId, setUserId] = useState();
-  const [adminlogout, setAdminLogout] = useState(false);
+  const [adminLogout, setAdminLogout] = useState(false);
   const navigate = useNavigate();
   const loc = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -102,7 +102,7 @@ const Header = (props) => {
 
   useEffect(() => {
     console.log("rendered");
-  }, [logout, adminlogout]);
+  }, [logout, adminLogout]);
 
   useEffect(() => {
     data();
@@ -172,8 +172,8 @@ const Header = (props) => {
 
             {loc && !props.admin ? (
               <Col style={{ display: "flex" }}>
-                {/* <MenuItem onClick={()=>navigate(`/profile/${userId}`)} className="gap-1"><i class="ri-profile-line"></i> Profile</MenuItem>
-      <MenuItem onClick={()=>navigate('/bookinghistory')} className="gap-1"><i class="ri-history-fill"></i> Booking History</MenuItem> */}
+                <MenuItem onClick={()=>navigate(`/profile/${userId}`)} className="gap-1"><i class="ri-profile-line"></i> Profile</MenuItem>
+      {/* <MenuItem onClick={()=>navigate('/bookinghistory')} className="gap-1"><i class="ri-history-fill"></i> Booking History</MenuItem> */}
                 <MenuItem onClick={handleOpen} className="gap-1">
                   <i class="ri-logout-circle-line"></i> Logout
                 </MenuItem>
