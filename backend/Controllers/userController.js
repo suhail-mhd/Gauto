@@ -8,6 +8,8 @@ var nodemailer = require('nodemailer');
 const AddCar = require('../Model/carModel/carModel')
 const districtSchema = require('../Model/districtModel/districtModel')
 const Booking = require("../Model/bookingModel/bookingModel");
+const appliedCoupon = require("../Model/applyCoupon/applyCoupon");
+const couponModel = require("../Model/couponModel/couponModel");
 
 var instance = new Razorpay({ key_id: process.env.RAZKEYID , key_secret: process.env.RAZSECRETKEY})
 
@@ -550,4 +552,64 @@ try {
 
 })
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset}
+// Apply Coupon
+
+const getCoupon  = asyncHandler(async(req,res)=>{
+
+  const userid = req.body.USERID
+  const data = await couponModel.find({})
+
+  if(data){
+      res.status(200).json({
+          data,
+          message:"Showing Data Successfully"
+      })
+  }else{
+      res.status(400).json({
+          message:"Showing Data Failed..."
+      })
+  }
+})
+
+const applyCoupon = asyncHandler(async(req,res)=>{
+  
+  const userId = req.body.USERID
+  const Code = req.body.couponApply
+
+  // console.log(userId , Code);
+
+  const data = await appliedCoupon.findOne({"CouponCode":Code,"UserId":userId})
+
+  if(data){
+    console.log("already exist");
+    res.json({
+      message:"You Have already applied this coupon"
+    })
+  }else{
+    // await AppliedCoupon.create({"CouponCode":Code,"UserId":userId})
+   const data =  await couponModel.findOne({"CouponCode":Code})
+    
+   console.log(data);
+
+   if(data){
+    res.status(200).json({
+      CouponCode:data.CouponCode,
+      couponName:data.couponName,
+      discount:data.discount,
+      _id:data._id,
+      message:"Coupon Applied Successfully"
+    })
+   }else{
+     console.log("NO COUPON");
+     res.json({
+       message:"coupon already used"
+     })
+   }
+  }
+  
+
+
+})
+
+
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon }

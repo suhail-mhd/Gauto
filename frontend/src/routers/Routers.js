@@ -24,6 +24,7 @@ import BookingHistory from "../pages/BookingHistory";
 import AdminBooking from "../pages/adminBookingManagement/bookingManagement";
 import Profile from "../pages/profile";
 import OfferManagement from "../pages/offerManagement/offerManagement";
+import CouponManagement from "../pages/couponManagement/couponManagement";
 
 const Routers = () => {
   return (
@@ -49,6 +50,7 @@ const Routers = () => {
       <Route path='/admin/districtManagement' element={<DistrictManagement/>} />
       <Route path='/admin/booking'  element={<AdminBooking/>} />
       <Route path='/admin/offerManagement' element={<OfferManagement/>} />
+      <Route path='/admin/coupon'  element={<CouponManagement/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
       // </Provider>

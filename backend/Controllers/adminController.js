@@ -6,6 +6,7 @@ const AddCar = require('../Model/carModel/carModel')
 const districtSchema = require('../Model/districtModel/districtModel');
 const Booking = require("../Model/bookingModel/bookingModel");
 const Offer = require('../Model/offerModel/offerModel');
+const couponModel = require('../Model/couponModel/couponModel');
 
 // login route
 
@@ -386,5 +387,69 @@ const deleteOffer = asyncHandler(async(req,res)=>{
     })
 })
 
+// coupon Management
 
-module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict, adminbookingdata, completed, districtOffer, getOffer, deleteOffer }
+const couponManagement  = asyncHandler(async(req,res)=>{
+
+
+    const coupon = req.body.couponName;
+    const discount = req.body.discount
+    const CouponCode = req.body.CouponCode
+
+    console.log(coupon , discount);
+
+    const data = await couponModel.create({"couponName":coupon , "discount":discount , "CouponCode":CouponCode})
+
+    if(data){
+        res.status(200).json({
+            message:"Coupon Added Successfully"
+        })
+    }else{
+        res.status(400).json({
+            message:"Data Could Not Added to the Database"
+        })
+    }
+
+ })
+
+
+ const getCoupon  = asyncHandler(async(req,res)=>{
+     
+
+    const data = await couponModel.find({})
+
+    if(data){
+        res.status(200).json({
+            data,
+            message:"Showing Data Successfully"
+        })
+    }else{
+        res.status(400).json({
+            message:"Showing Data Failed..."
+        })
+    }
+ })
+
+ const deleteCoupon = asyncHandler(async(req,res)=>{
+     console.log(req.params.id);
+     const id = req.params.id
+
+    const data = await couponModel.findById({"_id":id})
+
+    if(data){
+        await data.remove()
+
+        res.status(200).json({
+            message:"Coupon removed Successfully"
+        })
+    }else{
+        res.status(400).json({
+            message:"Coupon not removed"
+        })
+    }
+
+    
+ })
+
+
+module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict, adminbookingdata, completed, districtOffer, getOffer, deleteOffer, couponManagement, getCoupon, deleteCoupon }

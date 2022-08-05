@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset} = require('../Controllers/userController')
+const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon} = require('../Controllers/userController')
 
 router.route('/signup').post(RegisterUser)  
 
@@ -39,6 +39,10 @@ router.route('/getProfileUserData/:id').get(getProfileUserData)
 router.route('/userUpdate/:id').patch(userUpdate)
 
 router.route('/passwordReset/:id').patch(passwordReset)
+
+router.route('/getCoupon').post(getCoupon)
+
+router.route('/applyCoupon').post(applyCoupon)
 
 
 module.exports = router;

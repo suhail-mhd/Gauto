@@ -115,7 +115,7 @@ function DistrictManagement() {
         </Box>
       </Modal>
         <Box sx={{paddingLeft:30 }}>
-            <Typography variant='h4' component='h6' marginLeft={10} fontWeight={'bold'}  >District Management</Typography>
+            <Typography variant='h4' component='h6' marginLeft={10} fontWeight={'bold'} fontFamily="egoe UI"  >District Management</Typography>
             {distMessage ? <Typography variant='p' component='h6' textAlign='center' color='error' >{distMessage}</Typography> : null }
             <Box   component="form"
       sx={{

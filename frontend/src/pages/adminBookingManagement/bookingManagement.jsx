@@ -41,7 +41,7 @@ function AdminBooking() {
   return (
     <div>
          <SideBar/>
-        <Typography variant='h4' component='h6' textAlign='center' fontWeight={'bold'} mb={5} >Booking Management</Typography>
+        <Typography variant='h4' component='h6' textAlign='center' fontFamily="egoe UI" fontWeight={'bold'} mb={5} >Booking Management</Typography>
       <Box sx={{paddingLeft:30, marginBottom:20 }}>
       <TableContainer component={Paper}  >
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">

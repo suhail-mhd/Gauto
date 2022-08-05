@@ -1,10 +1,9 @@
-import { Box, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { Box, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import SideBar from '../../components/sideBar/sideBar'
 import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-
 
 const style = {
     position: 'absolute',
@@ -43,19 +42,12 @@ function OfferManagement() {
 
 
     const deleteData = () => {
-      // // console.log(district);
-      // // console.log(id);
-      // setDeleteDistrict(district)
-      //   setDeleteId(id)
       setOpenModal(true);
     }
 
-    // 
-    // console.log(selectDistrict);
 
     const getDistrict = () =>  {
         axios.get('http://localhost:5000/api/user/getDistrict').then((res)=>{
-            // console.log(res.data.Getdistrict);
             let responseData = res.data.Getdistrict
             setDistrictData(responseData)
         })
@@ -155,7 +147,7 @@ function OfferManagement() {
 
          <Box sx={{paddingLeft:35 ,justifyContent:'center'}} >
             <Box marginLeft={10} >
-                <Typography variant='h3' component='h2'  >
+                <Typography variant='h4' component='h6' fontFamily="egoe UI" style={{fontWeight:"bold"}}  >
                         Offer Management
                 </Typography>
             </Box>

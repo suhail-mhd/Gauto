@@ -1,10 +1,9 @@
+import React, { forwardRef, useEffect, useState } from 'react'
 import SideBar from '../../components/sideBar/sideBar'
 import axios from 'axios'
 import { Box } from '@mui/system';
-import React, { forwardRef, useEffect, useState } from 'react'
 import MaterialTable from '@material-table/core';
 import LockIcon from '@mui/icons-material/Lock';
-
 import AddBox from '@mui/icons-material/AddBox';
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import Check from '@mui/icons-material/Check';
@@ -21,10 +20,7 @@ import SaveAlt from '@mui/icons-material/SaveAlt';
 import Search from '@mui/icons-material/Search';
 import ViewColumn from '@mui/icons-material/ViewColumn';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-
-
-
-
+import Typography from "@mui/material/Typography";
 
 function UserManagement() {
   // const [tableData , setTableData] = useState([])
@@ -147,9 +143,10 @@ function UserManagement() {
     <div>
       <SideBar/>
       <Box sx={{paddingLeft:30 }}>
+      <Typography variant='h4' component='h6' marginLeft={10} fontWeight={'bold'} fontFamily="egoe UI" marginBottom={10} >User Management</Typography>
       <div style={{ height: '100vh', width: '100%' }}>
       <MaterialTable
-      title="USER MANAGEMENT"
+      title=""
       columns={columns} 
       data={data}
       icons={tableIcons}
