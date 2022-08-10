@@ -167,14 +167,15 @@ function Cards() {
             xl={4}
             style={{ display: "flex" }}
           >
-            <span className=" d-flex align-items-center gap-2">
+           <div className="d-flex" style={{marginTop:"-1rem"}}>
+           <span className=" d-flex align-items-center gap-2">
               <i class="ri-sort-asc"></i> Sort By
             </span>
             <Box sx={{ marginTop: 1 }}>
               <Button
                 aria-describedby={id}
                 type="button"
-                style={{ marginLeft: 20, marginTop: 1 }}
+                style={{ marginLeft: 80, marginTop: 1 }}
                 onClick={handleClick}
               >
                 Price
@@ -187,6 +188,7 @@ function Cards() {
                 </Box>
               </Popper>
             </Box>
+           </div>
           </Grid>
 
           <Grid sm={12} xs={12} md={6} lg={4} xl={4}>
@@ -312,7 +314,6 @@ function Cards() {
                       >
                         BOOK NOW
                       </Button>
-                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Add to wishlist</Button> */}
                     </CardActions>
                   </Card>
                 </Grid>
@@ -351,7 +352,6 @@ function Cards() {
                       >
                         <Typography gutterBottom variant="h5" component="div">
                           {obj.brand} {obj.model}
-                          {/* <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />}   /> */}
                         </Typography>
 
                         <Typography gutterBottom variant="h6" component="div">
@@ -398,7 +398,6 @@ function Cards() {
                       >
                         BOOK NOW
                       </Button>
-                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Add to wishlist</Button> */}
                     </CardActions>
                   </Card>
                 </Grid>
@@ -437,7 +436,6 @@ function Cards() {
                       >
                         <Typography gutterBottom variant="h5" component="div">
                           {obj.brand} {obj.model}
-                          {/* <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />}   /> */}
                         </Typography>
 
                         <Typography gutterBottom variant="h6" component="div">
@@ -484,7 +482,6 @@ function Cards() {
                       >
                         BOOK NOW
                       </Button>
-                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Add to wishlist</Button> */}
                     </CardActions>
                   </Card>
                 </Grid>
@@ -524,7 +521,6 @@ function Cards() {
                       >
                         <Typography gutterBottom variant="h5" component="div">
                           {obj.brand} {obj.model}
-                          {/* <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />}   /> */}
                         </Typography>
 
                         <Typography gutterBottom variant="h6" component="div">
@@ -571,9 +567,6 @@ function Cards() {
                       >
                         BOOK NOW
                       </Button>
-
-                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Remove from wishlist</Button>    */}
-                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Add to wishlist</Button>   */}
                     </CardActions>
                   </Card>
                 </Grid>
@@ -661,8 +654,6 @@ function Cards() {
                         BOOK NOW
                       </Button>
 
-                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Remove from wishlist</Button>    */}
-                      {/* <Button  onClick={()=>wishlist(`${obj._id}`)} >Add to wishlist</Button>   */}
                     </CardActions>
                   </Card>
                 </Grid>

@@ -38,7 +38,7 @@ const userManagement = asyncHandler(async(req,res)=>{
          const user = await User.find({});
          res.json(user)
      } catch (error) {
-         console.log("something happend while getting all user data " , error);
+         console.log("something happened while getting all user data " , error);
      }
  })
 

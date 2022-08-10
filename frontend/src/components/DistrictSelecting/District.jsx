@@ -67,12 +67,14 @@ function District() {
   return (
     <div>
       <Box sx={{ minWidth: 120, marginTop: 3 }}>
-      <span className=" d-flex align-items-center gap-2">
+      <div className="d-flex">
+      <span className=" d-flex align-items-center">
               <i class="ri-sort-asc"></i> Sort By
             </span>
         <Button style={{ marginLeft: 120 }} onClick={handleOpen}>
           District
         </Button>
+      </div>
         <Modal
           open={open}
           onClose={handleClose}

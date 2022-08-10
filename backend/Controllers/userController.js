@@ -829,7 +829,7 @@ const deleteComment =  asyncHandler(async(req,res)=>{
 
 const mapBoxToken = asyncHandler(async(req,res)=>{
   res.status(200).json({
-    Token:process.env.MAPBOX_TOKEN
+    Token: process.env.MAPBOX_TOKEN
   })
 })
 

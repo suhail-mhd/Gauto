@@ -5,14 +5,8 @@ import { Chart } from "react-google-charts";
 
 export const data1 = [
     ["Brands", "Cars"],
-    ["Mini Cooper", 1000],
-    ["Bmw", 1170],
+    ["Bmw", 500],
     ["Benz", 400],
-    ["Audi", 1130],
-    ["Ford", 980],
-    ["Mclaren", 840],
-    ["Rolls Royce", 630],
-    ["Mini Cooper", 1200],
   ];
   
   function getRandomNumber() {

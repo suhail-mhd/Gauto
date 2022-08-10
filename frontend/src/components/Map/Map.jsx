@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-// import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-// import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 import axios from "axios";
 import { useSelector } from "react-redux";
 
@@ -32,7 +30,7 @@ function Map() {
 
   const [returnRender, setReturnRender] = useState(false);
 
-  const lattitude = useSelector((state) => state.lat);
+  const latitude = useSelector((state) => state.lat);
   const longitude = useSelector((state) => state.lng);
 
   useEffect(() => {
@@ -77,7 +75,7 @@ function Map() {
 
       axios
         .get(
-          `https://api.mapbox.com/directions/v5/mapbox/driving/${e.coords.longitude},${e.coords.latitude};${longitude},${lattitude}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
+          `https://api.mapbox.com/directions/v5/mapbox/driving/${e.coords.longitude},${e.coords.latitude};${longitude},${latitude}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
         )
         .then((res) => {
           // console.log(res.data);
@@ -89,7 +87,7 @@ function Map() {
     const marker2 = new mapboxgl.Marker({
       draggable: false,
     })
-      .setLngLat([longitude, lattitude])
+      .setLngLat([longitude, latitude])
       .addTo(map);
 
     // add navigation control (the +/- zoom buttons)

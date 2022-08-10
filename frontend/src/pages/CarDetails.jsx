@@ -46,18 +46,18 @@ const CarDetails = () => {
     try {
       axios
         .post(`http://localhost:5000/api/user/GetSingleCar/${id2.id}`)
-        .then((responce) => {
-          // console.log(responce.data);
-          setCarData(responce.data);
-          setDummyAmount(responce.data.price);
-          setCarID(responce.data._id);
+        .then((response) => {
+          // console.log(response.data);
+          setCarData(response.data);
+          setDummyAmount(response.data.price);
+          setCarID(response.data._id);
           dispatch({
             type: "lattitude",
-            payload: responce.data.latitude,
+            payload: response.data.latitude,
           });
           dispatch({
             type: "longitude",
-            payload: responce.data.longitude,
+            payload: response.data.longitude,
           });
         });
     } catch (error) {
@@ -96,45 +96,45 @@ const CarDetails = () => {
 
   var test = false;
 
-  // wishlistData.filter((item) => {
-  //   if (item === carData._id) {
-  //     test = true;
-  //   } else {
-  //     test = false;
-  //   }
-  // });
+  wishlistData?.filter((item) => {
+    if (item === carData._id) {
+      test = true;
+    } else {
+      test = false;
+    }
+  });
 
-  // const wishlist = () => {
-  //   axios
-  //     .post(`http://localhost:5000/api/user/dataToWishlist/${id2.id}`, {
-  //       USERID,
-  //     })
-  //     .then((res) => {
-  //       // console.log(res);
+  const wishlist = () => {
+    axios
+      .post(`http://localhost:5000/api/user/dataToWishlist/${id2.id}`, {
+        USERID,
+      })
+      .then((res) => {
+        // console.log(res);
 
-  //       setUpdate(true);
-  //     });
-  // };
+        setUpdate(true);
+      });
+  };
 
-  // const getWishlistData = () => {
-  //   try {
-  //     axios
-  //       .post("http://localhost:5000/api/user/getDataFromWishlist", { USERID })
-  //       .then((res) => {
-  //         // console.log(res.data.wishlist);
-  //         setWishListData(res.data.wishlist);
-  //       });
-  //   } catch (error) {}
-  // };
+  const getWishlistData = () => {
+    try {
+      axios
+        .post("http://localhost:5000/api/user/getDataFromWishlist", { USERID })
+        .then((res) => {
+          // console.log(res.data.wishlist);
+          setWishListData(res.data.wishlist);
+        });
+    } catch (error) {}
+  };
 
-  // const removeFromWishlist = async () => {
-  //   const data = await axios.post(
-  //     `http://localhost:5000/api/user/removeFromWishlist/${id2.id}`,
-  //     { USERID }
-  //   );
-  //   // console.log(data.data);
-  //   setUpdate(false);
-  // };
+  const removeFromWishlist = async () => {
+    const data = await axios.post(
+      `http://localhost:5000/api/user/removeFromWishlist/${id2.id}`,
+      { USERID }
+    );
+    // console.log(data.data);
+    setUpdate(false);
+  };
 
   const HandleBookNow = (id) => {
     // console.log(id);
@@ -158,7 +158,7 @@ const CarDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     gettingData();
-    // getWishlistData();
+    getWishlistData();
 
     setPageRender(true);
   }, [update, pageRender]);
@@ -426,7 +426,7 @@ const CarDetails = () => {
                                 Book Now
                               </Button>
                             )}
-                            {/* {test ? (
+                            {test ? (
                               <Button
                                 sx={{ marginLeft: 3 }}
                                 onClick={removeFromWishlist}
@@ -437,7 +437,7 @@ const CarDetails = () => {
                               <Button sx={{ marginLeft: 3 }} onClick={wishlist}>
                                 Add To Wishlist
                               </Button>
-                            )} */}
+                            )}
                           </div>
                         ) : (
                           <Typography
