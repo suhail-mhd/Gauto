@@ -81,7 +81,7 @@ export default function SignIn() {
              }
            }
   
-           const {data , status} = await axios.post('http://localhost:5000/api/user/login',{
+           const {data , status} = await axios.post('/api/user/login',{
              email,password
            },config)
   
@@ -112,7 +112,7 @@ export default function SignIn() {
         }
       }
 
-      axios.post('http://localhost:5000/api/user/otpnumber',{mobNumber},config).then((res)=>{
+      axios.post('/api/user/otpnumber',{mobNumber},config).then((res)=>{
         console.log(res);
       })
 
@@ -141,7 +141,7 @@ const otpValidate = (e) => {
       }
     }
 
-    axios.post('http://localhost:5000/api/user/otpvalidate',{otp,mobNumber},config).then((res)=>{
+    axios.post('/api/user/otpvalidate',{otp,mobNumber},config).then((res)=>{
       // console.log(res.data.res.status);
       // console.log(res.data);
       setLoginDataByOtp(res.data)

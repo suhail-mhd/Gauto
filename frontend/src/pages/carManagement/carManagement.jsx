@@ -111,7 +111,7 @@ function CarManagement() {
   const carManagement = async () => {
     try {
       const data = await axios
-        .get("http://localhost:5000/api/user/getcarData")
+        .get("/api/user/getcarData")
         .then((res) => {
           adminCarManagement(res.data.data);
         });
@@ -143,7 +143,7 @@ function CarManagement() {
       };
 
       await axios.post(
-        "http://localhost:5000/api/admin/deletecar",
+        "/api/admin/deletecar",
         { deleteId },
         config
       );
@@ -169,7 +169,7 @@ function CarManagement() {
       };
 
       await axios
-        .get(`http://localhost:5000/api/admin/getallcardetails/${id}`)
+        .get(`/api/admin/getallcardetails/${id}`)
         .then((res) => {
           // console.log(res.data.brand);
           SetBrand(res.data.brand);
@@ -205,7 +205,7 @@ function CarManagement() {
 
       const data = await axios
         .patch(
-          "http://localhost:5000/api/admin/updatecardata",
+          "/api/admin/updatecardata",
           {
             id,
             brand,

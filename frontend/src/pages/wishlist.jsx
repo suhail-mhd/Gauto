@@ -48,14 +48,14 @@ function WishList() {
   }
 
   const getAllWishlistData  = () => {
-     axios.post('http://localhost:5000/api/user/getAllWishlistData',{USERID}).then((res)=>{
+     axios.post('/api/user/getAllWishlistData',{USERID}).then((res)=>{
       // console.log(res);
       setCarId(res.data)
     })
   }
 
   const removeFromWishlist = async() => {
-    const data = await  axios.post(`http://localhost:5000/api/user/removeFromWishlist/${removeId}`,{USERID})
+    const data = await  axios.post(`/api/user/removeFromWishlist/${removeId}`,{USERID})
       setRender(true)
       setOpen(false); 
   }

@@ -65,7 +65,7 @@ function BookingHistory() {
 
   const getBookingData = () => {
     axios
-      .post("http://localhost:5000/api/user/bookingdata", { userId: USERID })
+      .post("/api/user/bookingdata", { userId: USERID })
       .then((res) => {
         // console.log(res);
         SetHistory(res.data.bookingData);
@@ -74,7 +74,7 @@ function BookingHistory() {
 
   const CompletedHistory = () => {
     axios
-      .post("http://localhost:5000/api/user/completedTrips", { userId: USERID })
+      .post("/api/user/completedTrips", { userId: USERID })
       .then((res) => {
         // console.log(res);
         SetCompletedTrips(res.data.bookingData);
@@ -83,7 +83,7 @@ function BookingHistory() {
 
   const CancelledTrips = () => {
     axios
-      .post("http://localhost:5000/api/user/cancelledTrips", {
+      .post("/api/user/cancelledTrips", {
         userId: USERID,
         CardId: DeleteCarId,
       })
@@ -104,7 +104,7 @@ function BookingHistory() {
     // console.log(id);
 
     axios
-      .post(`http://localhost:5000/api/user/cancel/${cancelId}`)
+      .post(`/api/user/cancel/${cancelId}`)
       .then((res) => {
         // console.log(res.data.Message);
         setState(true);

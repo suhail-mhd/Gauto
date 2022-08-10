@@ -61,7 +61,7 @@ function ProductReview({id}) {
       e.preventDefault()
 
      try {
-      axios.post('http://localhost:5000/api/user/postingComment',{
+      axios.post('/api/user/postingComment',{
         userName,review,carId
       }).then((response)=>{
         console.log(response);
@@ -80,7 +80,7 @@ function ProductReview({id}) {
   const GetReviews = () => {
     
     try {
-      axios.post('http://localhost:5000/api/user/gettingReviews',
+      axios.post('/api/user/gettingReviews',
         {carId}
       ).then((response)=>{
         setComments(response.data.carData)
@@ -94,7 +94,7 @@ function ProductReview({id}) {
   const handleDelete = (id)=>{
 
     try {
-      axios.post(`http://localhost:5000/api/user/deleteComment/${deleteId}`).then((res)=>{
+      axios.post(`/api/user/deleteComment/${deleteId}`).then((res)=>{
         console.log(res);
       })
       setOpen(false);

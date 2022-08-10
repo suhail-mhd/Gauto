@@ -113,7 +113,7 @@ function BookingPage(id) {
       return;
     }
 
-    const data = await axios.post("http://localhost:5000/api/user/razorpay");
+    const data = await axios.post("/api/user/razorpay");
 
     // console.log(data);
 
@@ -130,7 +130,7 @@ function BookingPage(id) {
       description: "Your Car has been booked",
       handler: function (response) {
         axios
-          .post(`http://localhost:5000/api/user/razorpaysuccess/${id2.id}`, {
+          .post(`/api/user/razorpaysuccess/${id2.id}`, {
             start,
             end,
             USERNAME,
@@ -160,7 +160,7 @@ function BookingPage(id) {
   const successPaypalHandle = (paymentResult) => {
     console.log(paymentResult);
     axios
-      .post(`http://localhost:5000/api/user/razorpaysuccess/${id2.id}`, {
+      .post(`/api/user/razorpaysuccess/${id2.id}`, {
         start,
         end,
         USERNAME,
@@ -182,7 +182,7 @@ function BookingPage(id) {
       }
       setPageRender(true)
       const addPaypalScript = async ()=>{
-          const {data: clientId} = await axios.get('http://localhost:5000/api/user/paypal')
+          const {data: clientId} = await axios.get('/api/user/paypal')
           const script = document.createElement('script')
           script.type = 'text/javascript'
           script.src = `http://www.paypal.com/sdk/js?client-id=${clientId}`

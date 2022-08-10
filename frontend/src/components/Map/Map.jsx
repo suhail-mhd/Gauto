@@ -34,7 +34,7 @@ function Map() {
   const longitude = useSelector((state) => state.lng);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/user/mapBoxToken").then((res) => {
+    axios.get('/api/user/mapBoxToken').then((res) => {
       setMapToken(res.data.Token);
       setRender(true);
     });

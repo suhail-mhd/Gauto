@@ -40,7 +40,7 @@ function DistrictManagement() {
     const districtHandler = () => {
         
         try {
-            axios.post('http://localhost:5000/api/admin/addDistrict',{district}).then((res)=>{
+            axios.post('/api/admin/addDistrict',{district}).then((res)=>{
               console.log(res.data.message);
               setDistrictMessage(res.data.message)
             })
@@ -54,7 +54,7 @@ function DistrictManagement() {
 
     const getDistrictHandler = () => {
         try {
-            axios.get('http://localhost:5000/api/admin/getdistrictData').then((res)=>{
+            axios.get('/api/admin/getdistrictData').then((res)=>{
                 // console.log(res);
                 setDistrictData(res.data.getdata)
 
@@ -73,7 +73,7 @@ function DistrictManagement() {
     const districtDelete = async() => {
 
         try {
-           await axios.post('http://localhost:5000/api/admin/deleteDistrict',{deleteId})
+           await axios.post('/api/admin/deleteDistrict',{deleteId})
            setOpen(false)
 
 

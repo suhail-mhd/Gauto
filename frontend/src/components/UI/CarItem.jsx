@@ -33,12 +33,12 @@ const Div = styled("div")(({ theme }) => ({
 function Cards() {
   const [visible, setVisible] = useState(4);
   const [carsData, setCarsData] = useState([]);
-  const [render, Setrender] = useState(false);
+  const [render, SetRender] = useState(false);
   const [userId, setUserId] = useState("");
   const [searchText, setSearchText] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [lowtohighdata, setLowToHighData] = useState([]);
-  const [hightolowdata, setHighToLowData] = useState([]);
+  const [lowToHighData, setLowToHighData] = useState([]);
+  const [highToLowData, setHighToLowData] = useState([]);
   const [HighToLow, SetHighToLow] = useState(false);
   const [LowToHigh, SetLowToHigh] = useState(false);
   const [SearchData, SetSearchData] = useState(false);
@@ -75,12 +75,12 @@ function Cards() {
 
   const GetCars = async () => {
     const data = await axios
-      .get("http://localhost:5000/api/user/getcarData")
+      .get('/api/user/getcarData')
       .then((res) => {
         // console.log(res.data.data)
 
         setCarsData(res.data.data);
-        Setrender(true);
+        SetRender(true);
       });
 
     // console.log(data);
@@ -103,7 +103,7 @@ function Cards() {
 
     try {
       axios
-        .post("http://localhost:5000/api/user/search", { searchText })
+        .post("/api/user/search", { searchText })
         .then((res) => {
           // console.log(res.data.data);
           setSearchData(res.data.data);
@@ -114,9 +114,9 @@ function Cards() {
     }
   };
 
-  const lowtohigh = () => {
+  const lowToHigh = () => {
     try {
-      axios.get("http://localhost:5000/api/user/lowtohigh").then((res) => {
+      axios.get("/api/user/lowtohigh").then((res) => {
         // console.log(res);
         setLowToHighData(res.data.sort);
       });
@@ -127,9 +127,9 @@ function Cards() {
     }
   };
 
-  const hightolow = () => {
+  const highToLow = () => {
     try {
-      axios.get("http://localhost:5000/api/user/hightolow").then((res) => {
+      axios.get("/api/user/hightolow").then((res) => {
         //  console.log(res);
         setHighToLowData(res.data.sorttwo);
       });
@@ -182,9 +182,9 @@ function Cards() {
               </Button>
               <Popper id={id} open={open} anchorEl={anchorEl}>
                 <Box sx={{ border: 1, p: 1, bgcolor: "white" }}>
-                  <Button onClick={lowtohigh}>Price--Low to high</Button>
+                  <Button onClick={lowToHigh}>Price--Low to high</Button>
                   <br />
-                  <Button onClick={hightolow}>Price--High to low</Button>
+                  <Button onClick={highToLow}>Price--High to low</Button>
                 </Box>
               </Popper>
             </Box>
@@ -322,7 +322,7 @@ function Cards() {
           </Grid>
         ) : LowToHigh ? (
           <Grid container>
-            {lowtohighdata.slice(0, visible).map((obj, index) => {
+            {lowToHighData.slice(0, visible).map((obj, index) => {
               return (
                 <Grid item xl={3} lg={4} md={4} sm={6} xs={12} key={index}>
                   <Card
@@ -406,7 +406,7 @@ function Cards() {
           </Grid>
         ) : HighToLow ? (
           <Grid container>
-            {hightolowdata.slice(0, visible).map((obj, index) => {
+            {highToLowData.slice(0, visible).map((obj, index) => {
               return (
                 <Grid item xl={3} lg={4} md={4} sm={6} xs={12} key={index}>
                   <Card

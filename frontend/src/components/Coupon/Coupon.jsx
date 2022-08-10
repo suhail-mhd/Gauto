@@ -62,7 +62,7 @@ const handleChange = (event, newValue) => {
   
 const getCoupon = () => {
   try {
-      axios.post('http://localhost:5000/api/user/getCoupon',{USERID}).then((res)=>{
+      axios.post('/api/user/getCoupon',{USERID}).then((res)=>{
           // console.log(res.data.data);
           setShowCoupon(res.data.data)
           
@@ -79,7 +79,7 @@ const getCoupon = () => {
       e.preventDefault()
       // console.log(CouponApply);
         try {
-            axios.post('http://localhost:5000/api/user/applyCoupon',{CouponApply , USERID}).then((res)=>{
+            axios.post('/api/user/applyCoupon',{CouponApply , USERID}).then((res)=>{
               // console.log(res.data);
                 dispatch({
                   type:'CouponMsg',

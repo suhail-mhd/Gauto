@@ -47,7 +47,7 @@ function OfferManagement() {
 
 
     const getDistrict = () =>  {
-        axios.get('http://localhost:5000/api/user/getDistrict').then((res)=>{
+        axios.get('/api/user/getDistrict').then((res)=>{
             let responseData = res.data.Getdistrict
             setDistrictData(responseData)
         })
@@ -56,7 +56,7 @@ function OfferManagement() {
     const handleOfferSubmit = (e) => {
         e.preventDefault()
         try {
-            axios.post('http://localhost:5000/api/admin/districtOffer',{
+            axios.post('/api/admin/districtOffer',{
                 selectDistrict , offerName , offerPrice
             }).then((res)=>{
                 // console.log(res);  
@@ -70,7 +70,7 @@ function OfferManagement() {
 
     const getOffers = () => {
         try {
-            axios.get('http://localhost:5000/api/admin/getOffer').then((res)=>{
+            axios.get('/api/admin/getOffer').then((res)=>{
                 // console.log(res.data.data);
                 setOfferData(res.data.data)
             })
@@ -82,7 +82,7 @@ function OfferManagement() {
 
     const handleDelete = () => {
         try {
-            axios.post(`http://localhost:5000/api/admin/deleteOffer`,{"deleteDistrict":deleteDistrict,"deleteId":deleteId}).then((res)=>{
+            axios.post(`/api/admin/deleteOffer`,{"deleteDistrict":deleteDistrict,"deleteId":deleteId}).then((res)=>{
                 console.log(res);
                 setDeleteRender(true)
             })

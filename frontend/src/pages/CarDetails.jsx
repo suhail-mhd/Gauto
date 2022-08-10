@@ -3,8 +3,6 @@ import { Button, CardMedia, Grid, Typography } from "@mui/material";
 import { Container, Row, Col } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import { useParams, useNavigate } from "react-router-dom";
-import BookingForm from "../components/UI/BookingForm";
-import PaymentMethod from "../components/UI/PaymentMethod";
 import { useDispatch } from "react-redux";
 import { format, toDate } from "date-fns";
 import axios from "axios";
@@ -45,7 +43,7 @@ const CarDetails = () => {
   const gettingData = () => {
     try {
       axios
-        .post(`http://localhost:5000/api/user/GetSingleCar/${id2.id}`)
+        .post(`/api/user/GetSingleCar/${id2.id}`)
         .then((response) => {
           // console.log(response.data);
           setCarData(response.data);
@@ -106,7 +104,7 @@ const CarDetails = () => {
 
   const wishlist = () => {
     axios
-      .post(`http://localhost:5000/api/user/dataToWishlist/${id2.id}`, {
+      .post(`/api/user/dataToWishlist/${id2.id}`, {
         USERID,
       })
       .then((res) => {
@@ -119,7 +117,7 @@ const CarDetails = () => {
   const getWishlistData = () => {
     try {
       axios
-        .post("http://localhost:5000/api/user/getDataFromWishlist", { USERID })
+        .post("/api/user/getDataFromWishlist", { USERID })
         .then((res) => {
           // console.log(res.data.wishlist);
           setWishListData(res.data.wishlist);
@@ -129,7 +127,7 @@ const CarDetails = () => {
 
   const removeFromWishlist = async () => {
     const data = await axios.post(
-      `http://localhost:5000/api/user/removeFromWishlist/${id2.id}`,
+      `/api/user/removeFromWishlist/${id2.id}`,
       { USERID }
     );
     // console.log(data.data);
@@ -140,7 +138,7 @@ const CarDetails = () => {
     // console.log(id);
     try {
       axios
-        .post(`http://localhost:5000/api/user/checkdate`, { val, val2, id })
+        .post(`/api/user/checkdate`, { val, val2, id })
         .then((res) => {
           // console.log(res);
           SetDateAvailability(res.data.message);

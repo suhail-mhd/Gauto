@@ -42,7 +42,7 @@ function District() {
 
     try {
       axios
-        .post("http://localhost:5000/api/user/searchdistrict", { place: dis })
+        .post("/api/user/searchdistrict", { place: dis })
         .then((res) => {
           // console.log(res.data.data);
           setDisSortedData(res.data.data);
@@ -53,7 +53,7 @@ function District() {
 
   const getDistict = () => {
     try {
-      axios.get("http://localhost:5000/api/user/getdistrict").then((res) => {
+      axios.get("/api/user/getdistrict").then((res) => {
         SetDistrictData(res.data.Getdistrict);
       });
     } catch (error) {
