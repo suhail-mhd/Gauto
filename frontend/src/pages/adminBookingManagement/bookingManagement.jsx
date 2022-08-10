@@ -61,7 +61,6 @@ function AdminBooking() {
           BookingManagement.map((obj,index)=>{
               return(
                 <TableRow
-                aksjfdbak
                 sx={{ '&:last-child td, &:last-child th': { border: 0 },height:70,border:'1px solid black' }} key={index}
               >
                 <TableCell component="th" scope="row">

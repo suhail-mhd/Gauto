@@ -172,8 +172,11 @@ const Header = (props) => {
 
             {loc && !props.admin ? (
               <Col style={{ display: "flex" }}>
-                <MenuItem onClick={()=>navigate(`/profile/${userId}`)} className="gap-1"><i class="ri-profile-line"></i> Profile</MenuItem>
-      {/* <MenuItem onClick={()=>navigate('/bookinghistory')} className="gap-1"><i class="ri-history-fill"></i> Booking History</MenuItem> */}
+                <MenuItem onClick={()=>navigate(`/profile/${userId}`)} className="gap-1">Profile</MenuItem>
+      <MenuItem onClick={()=>navigate('/bookinghistory')} className="gap-1">Booking History</MenuItem>
+      <div style={{marginRight:10}}>
+            
+            <MenuItem sx={{color:'white'}} onClick={()=>navigate('/wishlist')}> Wishlist</MenuItem> </div>
                 <MenuItem onClick={handleOpen} className="gap-1">
                   <i class="ri-logout-circle-line"></i> Logout
                 </MenuItem>

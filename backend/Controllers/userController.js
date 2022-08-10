@@ -10,6 +10,8 @@ const districtSchema = require('../Model/districtModel/districtModel')
 const Booking = require("../Model/bookingModel/bookingModel");
 const appliedCoupon = require("../Model/applyCoupon/applyCoupon");
 const couponModel = require("../Model/couponModel/couponModel");
+const Review = require('../Model/reviewModel/reviewModel')
+
 
 var instance = new Razorpay({ key_id: process.env.RAZKEYID , key_secret: process.env.RAZSECRETKEY})
 
@@ -391,13 +393,13 @@ const razorpaysuccess = asyncHandler(async(req,res)=>{
   const amount = req.body.amount
   const carId = req.params.id
   const useremail = req.body.USEREMAIL
-  // console.log(couponId , couponCode , userId );
-  // console.log(startData , endData , userId , userName , carName , carId , amount);
+  const couponId = req.body.couponId;
+  const couponCode = req.body.couponCode;
 
 try {
   
   if(couponId && couponCode ){
-    const couponstore = await AppliedCoupon.create({'UserId':userId,'CouponCode':couponCode})
+    const couponstore = await appliedCoupon.create({'UserId':userId,'CouponCode':couponCode})
   }
   // console.log(couponstore);
 
@@ -574,7 +576,7 @@ const getCoupon  = asyncHandler(async(req,res)=>{
 const applyCoupon = asyncHandler(async(req,res)=>{
   
   const userId = req.body.USERID
-  const Code = req.body.couponApply
+  const Code = req.body.CouponApply
 
   // console.log(userId , Code);
 
@@ -611,5 +613,226 @@ const applyCoupon = asyncHandler(async(req,res)=>{
 
 })
 
+// wishlist
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon }
+const dataToWishlist = asyncHandler(async(req,res)=>{
+  const carId = req.params.id
+  const data = req.body.USERID
+
+
+  console.log(carId);
+  console.log(data);
+
+
+  const user = await User.findById({"_id":data})
+  await user.wishlist.push(carId)
+  await user.save()
+
+
+  // console.log(user);
+
+
+  if(user){
+    res.status(200).json({
+      wishlist:user.wishlist
+    })
+  }
+ 
+})
+
+const getDataFromWishlist = asyncHandler(async(req,res)=>{
+
+
+  const id = req.body.USERID
+
+  // console.log(id);
+
+  const user = await User.findById({"_id":id})
+
+  if(user){
+    res.status(200).json({
+      wishlist:user.wishlist
+    })
+  }else{
+    res.status(400).send("error occured while searching user id in wishlist data")
+  }
+
+  console.log(user);
+})
+
+const getAllWishlistData = asyncHandler(async(req,res)=>{
+
+  const id = req.body.USERID
+
+  // console.log(id);
+
+  const data = await User.findById({'_id':id}).populate(
+    'wishlist',
+    'imgUrl model brand'
+  )
+
+  // console.log(data);
+  if(data){
+    res.json(data.wishlist)
+  }else{
+    res.status(400).send("error getting wishlist id's in wishlist page")
+  }
+  
+  // console.log(data);
+
+})
+
+
+const removeFromWishlist = asyncHandler(async(req,res)=>{
+  
+  const userId = req.body.USERID
+  const carId = req.params.id
+
+  const user = await User.findById({"_id":userId})
+  if(user){
+    await user.wishlist.pull(carId)
+    await user.save()
+    res.json({
+      message:"Deleted Successfully"
+      
+    })
+  }
+
+  // console.log(userId);
+  // console.log(carId);
+})
+
+// booking history
+
+const completedTrips = asyncHandler(async(req,res)=>{
+  const userId = req.body.userId
+
+  const bookingData = await Booking.find({"userId":userId,"complete":true})
+
+  // console.log(bookingData);
+
+
+  if(bookingData){
+    res.status(200).json({
+      bookingData
+    })
+  }else{
+    res.status(400).json({
+      message:"Error while fetching booking history"
+    })
+  }
+})
+
+const cancelledTrips = asyncHandler(async(req,res)=>{
+  const userId = req.body.userId
+  const carId = req.body.CardId
+
+  // console.log(userId , carId);
+
+  const bookingData = await Booking.find({"userId":userId,"cancel":true})
+
+  // console.log(bookingData);
+
+
+  if(bookingData){
+    const IncCount = await AddCar.findOneAndUpdate({"_id":carId},{$inc:{Bookingcount:-1}})
+    res.status(200).json({
+      bookingData
+    })
+  }else{
+    res.status(400).json({
+      message:"Error while fetching booking history"
+    })
+  }
+})
+
+const cancel = asyncHandler(async(req,res)=>{
+  console.log(req.params.id);
+
+  const data ={
+    "cancel":true
+  }
+
+  const id= req.params.id
+  const cancelData = await Booking.findByIdAndUpdate(id ,data,{
+    new:true,
+    runValidators:true,
+    useFindAndModify:false
+  })
+
+  if(cancelData){
+    res.status(200).json({
+      Message:"You have cancelled the Booking"
+    })
+  }else{
+    res.status(400).json({
+      message:"something went wrong"
+    })
+  }
+})
+
+const postingComment = asyncHandler(async(req,res)=>{
+  // console.log(req.body);
+  const {userName , review , carId} = req.body
+
+  // console.log(userName , review , carId);
+
+  const reviewData = await Review.create({
+      userName,
+      review,
+      carId
+  })
+  if(reviewData){
+    res.status(200).json({
+      id:reviewData._id,
+      name:reviewData.userName,
+      review:reviewData.review,
+    })
+  }else{
+    res.status(400).send("error occured")
+  }
+
+
+})
+
+const gettingReviews = asyncHandler(async(req,res)=>{
+    const carId = req.body.carId
+
+    const data = JSON.stringify(carId)
+
+    const carData = await Review.find({data})
+
+    if(carData){
+      res.status(200).json({
+        carId:carData.carId,
+        carData
+      })
+
+  
+    }else{
+      res.status(400).send("error occured during commenting section")
+    }
+})
+
+
+const deleteComment =  asyncHandler(async(req,res)=>{
+  const _id = req.params.id
+
+  const deleteData = await Review.findById({_id})
+  await deleteData.remove()
+
+  // console.log(deleteData);
+
+})
+
+// Map Box
+
+const mapBoxToken = asyncHandler(async(req,res)=>{
+  res.status(200).json({
+    Token:process.env.MAPBOX_TOKEN
+  })
+})
+
+
+
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, postingComment, gettingReviews, deleteComment, mapBoxToken }

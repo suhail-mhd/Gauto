@@ -25,6 +25,8 @@ import AdminBooking from "../pages/adminBookingManagement/bookingManagement";
 import Profile from "../pages/profile";
 import OfferManagement from "../pages/offerManagement/offerManagement";
 import CouponManagement from "../pages/couponManagement/couponManagement";
+import WishList from "../pages/wishlist";
+import Map from "../components/Map/Map";
 
 const Routers = () => {
   return (
@@ -41,6 +43,8 @@ const Routers = () => {
       <Route path='/bookingsuccess' element={<BookingSuccess/>} />
       <Route path='/profile/:id'  element={<Profile/>} />
       <Route path='/bookinghistory' element={<BookingHistory/>} />
+      <Route path='/wishlist' element={<WishList/>} />
+      <Route path='/map' element={<Map/>} />
       <Route path="/contact" element={<Contact />} />
       <Route path='/admin' element={<AdminLogin/>} />
       <Route path='/admin/dashboard' element={<AdminDashboard/>} />

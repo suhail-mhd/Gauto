@@ -123,7 +123,7 @@ function UserManagement() {
   const row = async()=>{
 
       try {
-        await axios.get('http://localhost:5000/api/admin/usermanagement').then((res)=>{
+        await axios.get('http://localhost:5000/api/admin/userManagement').then((res)=>{
           // console.log(res.data);
           setData(res.data)
         })

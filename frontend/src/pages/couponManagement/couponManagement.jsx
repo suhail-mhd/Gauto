@@ -196,7 +196,7 @@ function CouponManagement() {
           </Box>
         </Box>
 
-        <Box sx={{ width: 600, marginLeft: 70 }} marginTop={3}>
+        <Box sx={{ width: 600, marginLeft: 10 }} marginTop={10} marginBottom={10}>
           <TableContainer component={Paper}>
             <Table sx={{ maxWidth: 600 }} aria-label="simple table">
               <TableHead>
@@ -224,7 +224,7 @@ function CouponManagement() {
                           style={{ color: "red" }}
                           onClick={() => deleteData(`${Obj._id}`)}
                         >
-                          Delete <DeleteIcon />{" "}
+                        <DeleteIcon />{" "}
                         </Button>
                       </TableCell>
                     </TableRow>

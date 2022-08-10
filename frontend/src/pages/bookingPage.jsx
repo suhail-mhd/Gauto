@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import { useNavigate, useParams } from "react-router-dom";
-// import Coupon from '../../Components/Coupon/Coupon';
+import Coupon from '../components/Coupon/Coupon';
 import axios from "axios";
 import { Icon } from "@iconify/react";
 import Chip from "@mui/material/Chip";
@@ -83,15 +83,15 @@ function BookingPage(id) {
   const totalAmount = useSelector((state) => state.Total);
   const discountAmount = useSelector((state) => state.Discount);
   const disAllData = useSelector((state) => state.DisAll);
-  //   const CouponMsg = useSelector((state)=>state.msg)
+    const CouponMsg = useSelector((state)=>state.msg)
 
   // console.log(CouponMsg);
   // console.log(discountAmount);
 
   // console.log(disAllData);
 
-  //   const couponId = disAllData._id
-  //   const couponCode = disAllData.CouponCode
+    const couponId = disAllData._id
+    const couponCode = disAllData.CouponCode
   const carName = cardata.brand;
 
   // console.log(couponId , couponCode ) ;
@@ -138,6 +138,7 @@ function BookingPage(id) {
             carName,
             amount,
             USEREMAIL,
+            couponId,couponCode
           })
           .then((res) => {
             // console.log(res.data.message);
@@ -167,6 +168,7 @@ function BookingPage(id) {
         carName,
         amount,
         USEREMAIL,
+        couponId,couponCode
       })
       .then((res) => {
         // console.log(res.data.message);
@@ -338,10 +340,10 @@ function BookingPage(id) {
               </Grid>
 
               <Grid item sm={12} xs={12} md={12} lg={12} xl={12}>
-                {/* <Box sx={{justifyContent:'end',display:'flex',paddingTop:2}} >
+                <Box sx={{justifyContent:'end',display:'flex',paddingTop:2}} >
           {CouponMsg === 'You Have already applied this coupon' ? <Chip sx={{color:"red"}} label="You Have already applied this coupon" />  :  null }
           {CouponMsg === 'Coupon Applied Successfully' ?   <Chip sx={{color:"green"}} label="Coupon Applied Successfully" /> : null}
-          </Box> */}
+          </Box>
                 {discountAmount ? (
                   <Box
                     sx={{
@@ -355,7 +357,7 @@ function BookingPage(id) {
                       component="h6"
                       style={{ textDecoration: "line-through" }}
                     >
-                      <span style={{ fontWeight: "bold" }}>Total Amount:</span>{" "}
+                      Total Amount:{" "}
                       {totalAmount}/-
                     </Typography>
                   </Box>
@@ -383,7 +385,7 @@ function BookingPage(id) {
                     }}
                   >
                     <Typography variant="p" component="h6">
-                      Discount AMOUNT : {discountAmount}/-
+                      Discount Amount : {discountAmount}/-
                     </Typography>
                   </Box>
                 ) : null}
@@ -397,7 +399,7 @@ function BookingPage(id) {
                     }}
                   >
                     <Typography variant="h5" component="h5">
-                      Offerd Amount :{" "}
+                     <span style={{ fontWeight: "bold" }}>Offered Amount :</span> {" "}
                       {{ discountAmount } ? disAmount : { totalAmount }}/-
                     </Typography>
                   </Box>
@@ -418,12 +420,12 @@ function BookingPage(id) {
                 </Box>
               </Grid>
 
-              {/* {
+              {
         pay ?
         <Coupon pay={pay} SetPay={SetPay} />
         :
         null
-      } */}
+      }
             </Grid>
           </Box>
         </Container>

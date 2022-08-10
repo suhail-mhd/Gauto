@@ -7,9 +7,9 @@ const appreducer = combineReducers({
     car:CarData,
     Total:TotalAmount,
     DisSort:DistrictSort,
-    // Discount:DiscountAmount,
-    // DisAll:DiscountAllData,
-    // msg:CouponMsg,
+    Discount:DiscountAmount,
+    DisAll:DiscountAllData,
+    msg:CouponMsg,
     lat:Lattitude,
     lng:Longitude
 })
@@ -58,29 +58,29 @@ function DistrictSort(prevState = [] , action){
 }
 
 
-// function DiscountAmount(prevState = '' , action){
-//     switch(action.type){
-//         case 'discount':
-//                 return action.payload
-//         default: return prevState
-//     }
-// }
+function DiscountAmount(prevState = '' , action){
+    switch(action.type){
+        case 'discount':
+                return action.payload
+        default: return prevState
+    }
+}
 
-// function DiscountAllData(prevState = {} , action){
-//     switch(action.type){
-//         case 'DisAllData':
-//                 return action.payload
-//         default: return  prevState
-//     }
-// }
+function DiscountAllData(prevState = {} , action){
+    switch(action.type){
+        case 'DisAllData':
+                return action.payload
+        default: return  prevState
+    }
+}
 
-// function CouponMsg(prevState = '' , action){
-//     switch(action.type){
-//         case 'CouponMsg':
-//                 return action.payload
-//         default: return prevState
-//     }
-// }
+function CouponMsg(prevState = '' , action){
+    switch(action.type){
+        case 'CouponMsg':
+                return action.payload
+        default: return prevState
+    }
+}
 
 function Lattitude(prevState = '' , action){
     switch(action.type){

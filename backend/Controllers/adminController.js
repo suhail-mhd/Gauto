@@ -451,5 +451,61 @@ const couponManagement  = asyncHandler(async(req,res)=>{
     
  })
 
+ const revenue = asyncHandler(async(req,res)=>{
+    const revenue = await Booking.aggregate([{
+        $match:{
+            "complete":true
+        }
+        },
+        {$group:{
+            "_id":"null",
+            sum:{$sum:"$PayedAmount"}
+        }},
+        {$project:{
+            _id:0,
+            sum:1
+        }},
+       {$unwind:"$sum"}
+    ]
+    )
+  
+    
 
-module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict, adminbookingdata, completed, districtOffer, getOffer, deleteOffer, couponManagement, getCoupon, deleteCoupon }
+    // console.log(revenu);
+
+
+    if(revenue){
+        res.status(200).json({
+                "revenue":revenue
+        })
+    }else{
+        res.status(400).json({
+            message:"Something went wrong"
+        })
+    }
+})
+
+
+const mostUsedCar = asyncHandler(async(req,res)=>{
+    const max = await AddCar.find({}).sort({Bookingcount:-1}).limit(1)
+ 
+     const min =await AddCar.find({}).sort({Bookingcount:1}).limit(1)
+ //    console.log(min[0]);
+ 
+    if(max){
+        res.status(200).json({
+         brand:max[0].brand,
+         model:max[0].model,
+         MinBrand:min[0].brand,
+         MinModel:min[0].model   
+        })
+    }else{
+        res.status(400).json({
+            message:"Error while getting maximum used car from the database"
+        })
+    }
+ })
+
+
+
+module.exports = { Adminlogin, userManagement, userManagementUpdate, usermanagementUpdateUnblock, AddCarRoute, deletecar, getAllCarDeatails, UpdateCarData, addDistrict, getdistrictData, deleteDistrict, adminbookingdata, completed, districtOffer, getOffer, deleteOffer, couponManagement, getCoupon, deleteCoupon, revenue, mostUsedCar }

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon} = require('../Controllers/userController')
+const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, postingComment, gettingReviews, deleteComment, mapBoxToken } = require('../Controllers/userController')
 
 router.route('/signup').post(RegisterUser)  
 
@@ -43,6 +43,28 @@ router.route('/passwordReset/:id').patch(passwordReset)
 router.route('/getCoupon').post(getCoupon)
 
 router.route('/applyCoupon').post(applyCoupon)
+
+router.route('/dataToWishlist/:id').post(dataToWishlist)
+
+router.route('/getDataFromWishlist').post(getDataFromWishlist)
+
+router.route('/getAllWishlistData').post(getAllWishlistData)
+
+router.route('/removeFromWishlist/:id').post(removeFromWishlist)
+
+router.route('/completedTrips').post(completedTrips)
+
+router.route('/cancelledTrips').post(cancelledTrips)
+
+router.route('/cancel/:id').post(cancel)
+
+router.route('/postingComment').post(postingComment)
+
+router.route('/gettingReviews').post(gettingReviews)
+
+router.route('/deleteComment/:id').post(deleteComment)
+
+router.route('/mapBoxToken').get(mapBoxToken)
 
 
 module.exports = router;
