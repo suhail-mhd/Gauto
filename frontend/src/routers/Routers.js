@@ -30,7 +30,6 @@ import Map from "../components/Map/Map";
 
 const Routers = () => {
   return (
-    // <Provider store={store} >
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
@@ -57,7 +56,6 @@ const Routers = () => {
       <Route path='/admin/coupon'  element={<CouponManagement/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
-      // </Provider>
   );
 };
 

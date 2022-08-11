@@ -11,7 +11,7 @@ adminRouter.route('/usermanagementUpdate/:id').patch(userManagementUpdate)
 
 adminRouter.route('/usermanagementUpdateUnblock/:id').patch(usermanagementUpdateUnblock)
 
-adminRouter.route('/addcar').post(AddCarRoute)
+adminRouter.route('/addCar').post(AddCarRoute)
 
 adminRouter.route('/deletecar').post(deletecar)
 

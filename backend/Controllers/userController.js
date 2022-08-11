@@ -771,58 +771,98 @@ const cancel = asyncHandler(async(req,res)=>{
   }
 })
 
-const postingComment = asyncHandler(async(req,res)=>{
-  // console.log(req.body);
-  const {userName , review , carId} = req.body
+// const postingComment = asyncHandler(async(req,res)=>{
+//   // console.log(req.body);
+//   const {userName , review , carId} = req.body
 
-  // console.log(userName , review , carId);
+//   // console.log(userName , review , carId);
 
-  const reviewData = await Review.create({
-      userName,
-      review,
-      carId
-  })
-  if(reviewData){
-    res.status(200).json({
-      id:reviewData._id,
-      name:reviewData.userName,
-      review:reviewData.review,
-    })
-  }else{
-    res.status(400).send("error occured")
-  }
+//   const reviewData = await Review.create({
+//       userName,
+//       review,
+//       carId
+//   })
+//   if(reviewData){
+//     res.status(200).json({
+//       id:reviewData._id,
+//       name:reviewData.userName,
+//       review:reviewData.review,
+//     })
+//   }else{
+//     res.status(400).send("error occured")
+//   }
 
 
-})
+// })
 
-const gettingReviews = asyncHandler(async(req,res)=>{
-    const carId = req.body.carId
+// const gettingReviews = asyncHandler(async(req,res)=>{
+//     const carId = req.body.carId
 
-    const data = JSON.stringify(carId)
+//     const data = JSON.stringify(carId)
 
-    const carData = await Review.find({data})
+//     const carData = await Review.find({data})
 
-    if(carData){
-      res.status(200).json({
-        carId:carData.carId,
-        carData
-      })
+//     if(carData){
+//       res.status(200).json({
+//         carId:carData.carId,
+//         carData
+//       })
 
   
-    }else{
-      res.status(400).send("error occured during commenting section")
+//     }else{
+//       res.status(400).send("error occured during commenting section")
+//     }
+// })
+
+
+// const deleteComment =  asyncHandler(async(req,res)=>{
+//   const _id = req.params.id
+
+//   const deleteData = await Review.findById({_id})
+//   await deleteData.remove()
+
+//   // console.log(deleteData);
+
+// })
+
+// review
+
+const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body
+
+  const product = await AddCar.findById(req.params.id)
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    )
+
+    if (alreadyReviewed) {
+      res.status(400)
+      throw new Error('This Car already reviewed')
     }
-})
 
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    }
 
-const deleteComment =  asyncHandler(async(req,res)=>{
-  const _id = req.params.id
+    product.reviews.push(review)
 
-  const deleteData = await Review.findById({_id})
-  await deleteData.remove()
+    product.numReviews = product.reviews.length
 
-  // console.log(deleteData);
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length
 
+    await product.save()
+    res.status(201).json({ message: 'Review added' })
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
 })
 
 // Map Box
@@ -835,4 +875,4 @@ const mapBoxToken = asyncHandler(async(req,res)=>{
 
 
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, postingComment, gettingReviews, deleteComment, mapBoxToken }
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview }

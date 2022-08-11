@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, postingComment, gettingReviews, deleteComment, mapBoxToken } = require('../Controllers/userController')
+const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview } = require('../Controllers/userController')
 
 router.route('/signup').post(RegisterUser)  
 
@@ -58,13 +58,14 @@ router.route('/cancelledTrips').post(cancelledTrips)
 
 router.route('/cancel/:id').post(cancel)
 
-router.route('/postingComment').post(postingComment)
+// router.route('/postingComment').post(postingComment)
 
-router.route('/gettingReviews').post(gettingReviews)
+// router.route('/gettingReviews').post(gettingReviews)
 
-router.route('/deleteComment/:id').post(deleteComment)
+// router.route('/deleteComment/:id').post(deleteComment)
 
 router.route('/mapBoxToken').get(mapBoxToken)
 
+router.route('/:id/reviews').post(createProductReview)
 
 module.exports = router;

@@ -1,4 +1,7 @@
-import {createStore , combineReducers} from 'redux'
+import {createStore , combineReducers, applyMiddleware } from 'redux'
+import { productReviewCreateReducer } from '../reviewReducer/reviewReducer'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 
 const appreducer = combineReducers({
@@ -11,7 +14,9 @@ const appreducer = combineReducers({
     DisAll:DiscountAllData,
     msg:CouponMsg,
     lat:Lattitude,
-    lng:Longitude
+    lng:Longitude,
+    productReviewCreate: productReviewCreateReducer,
+    productDetails: productDetailsReducer,
 })
 
 
@@ -98,8 +103,26 @@ function Longitude(prevState = '', action ){
     }
 }
 
+function productDetailsReducer  (
+    state = { product: { reviews: [] } },
+    action
+  )  {
+    switch (action.type) {
+      case 'PRODUCT_DETAILS_REQUEST':
+        return { loading: true, ...state }
+      case 'PRODUCT_DETAILS_SUCCESS':
+        return { loading: false, product: action.payload }
+      case 'PRODUCT_DETAILS_FAIL':
+        return { loading: false, error: action.payload }
+      default:
+        return state
+    }
+  }
 
-const store = createStore(appreducer)
+const middleware = [thunk]
+
+
+const store = createStore(appreducer, composeWithDevTools(applyMiddleware(...middleware)))
 
 
 export default store

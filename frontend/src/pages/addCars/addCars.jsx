@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../Firebase/Firebase";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import SideBar from '../../components/sideBar/sideBar'
 
 function AddCars() {
   const {
@@ -29,80 +30,36 @@ function AddCars() {
 
   console.log(imgName);
 
-  const submitHandle = async (data) => {
-    const {
-      url,
-      brand,
-      model,
-      fueltype,
-      RegNo,
-      price,
-      seats,
-      location,
-      mileage,
-      register,
-      description,
-      Longdescription,
-      latitude,
-      longitude,
-    } = data;
+  const submitHandle = async(data)=>{
+    const {brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,Longdescription ,latitude ,longitude} = data
+    
+    console.log(brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,latitude ,longitude);
 
-    console.log(
-      url,
-      brand,
-      model,
-      fueltype,
-      RegNo,
-      price,
-      seats,
-      location,
-      mileage,
-      register,
-      description,
-      latitude,
-      longitude
-    );
+
 
     try {
-      //   setloading(true)
+          // setloading(true)
       const config = {
         headers: {
-          "Content-type": "application/json",
-        },
-      };
+            "Content-type": "application/json"
+        }
+      }
 
-      console.log("triggerd");
-      const data = await axios.post(
-        "/api/admin/addcar",
-        {
-          url,
-          brand,
-          model,
-          fueltype,
-          RegNo,
-          price,
-          seats,
-          location,
-          mileage,
-          register,
-          description,
-          imgUrl,
-          imgName,
-          Longdescription,
-          latitude,
-          longitude,
-        },
-        config
-      );
+      const data  = await axios.post('/api/admin/addCar',{
+        brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,imgUrl,imgName,Longdescription,latitude ,longitude
+      }
+      ,config)
 
-      setresData(data.data);
-      navigate("/admin/carManagement");
-      // setloading(false)
-    } catch (error) {
-      console.log(error);
-      //  setloading(false)
-    }
-  };
+
+      setresData(data.data)
+      navigate('/admin/carManagement')
+    // setloading(false)
+      
+ } catch (error) {
+     console.log(error);
+    //  setloading(false)
+ }
+}
 
   useEffect(() => {
     if (loc) {
@@ -117,11 +74,11 @@ function AddCars() {
   const imgUpload = (e) => {
     e.preventDefault();
     //   setloading(false)
-    // console.log(img);
+    console.log(img);
     if (!img) return;
-    const sotrageRef = ref(storage, `carImages/${img.name}`);
+    const storageRef = ref(storage, `carImages/${img.name}`);
     setImgName(img.name);
-    const uploadTask = uploadBytesResumable(sotrageRef, img);
+    const uploadTask = uploadBytesResumable(storageRef, img);
 
     uploadTask.on(
       "state_changed",
@@ -146,12 +103,13 @@ function AddCars() {
 
   return (
     <div>
+      <SideBar/>
       {/* { */}
       {/* //    loading ? <Loading/> : */}
 
       <Container maxWidth="lg">
-        <Box sx={{ flexGrow: 1, paddingTop: 10, marginBottom: 10 }}>
-          <Paper elevation={5} style={{ padding: "2rem" }}>
+        <Box sx={{ flexGrow: 1, paddingTop: 10, marginBottom: 10, marginLeft: 30 }}>
+          <Paper elevation={5} style={{ padding: "5rem" }}>
             <div>
               <Typography variant="h4" component="h5">
                 Add Cars
@@ -357,7 +315,7 @@ function AddCars() {
                     />
                   </Grid>
 
-                  <Grid item md={6} xs={12} lg={4} marginTop={2}>
+                  {/* <Grid item md={6} xs={12} lg={4} marginTop={2}>
                     <label
                       style={{ color: "red", fontSize: "12px" }}
                       htmlFor=""
@@ -375,7 +333,7 @@ function AddCars() {
                         minLength: { value: 2, message: "minimum length is 2" },
                       })}
                     />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
                     <label
@@ -424,7 +382,7 @@ function AddCars() {
                     </label>
                     <br />
                     <TextareaAutosize
-                      style={{ height: 60, width: 300 }}
+                      style={{ height: 100, width: 220 }}
                       maxRows={4}
                       label="Description"
                       placeholder="Enter Description about car"
@@ -468,7 +426,7 @@ function AddCars() {
                     />
                   </Grid>
 
-                  <Grid item md={6} xs={12} lg={4} marginTop={2}>
+                  <Grid item md={6} xs={12} lg={4} marginTop={2} marginLeft={2}>
                     <Box sx={{ marginTop: 6 }} className="d-flex">
                       <input
                         type="file"
@@ -500,7 +458,7 @@ function AddCars() {
                 </Grid>
 
                 <div> 
-                  <Button variant="contained" type="Submit">
+                  <Button variant="contained" type="submit" value="submit" style={{float: 'right'}}>
                     Submit
                   </Button>
                 </div>

@@ -239,8 +239,8 @@ function CarManagement() {
     //   setloading(false)
     // console.log(img);
     if (!img) return;
-    const sotrageRef = ref(storage, `carImages/${img.name}`);
-    const uploadTask = uploadBytesResumable(sotrageRef, img);
+    const storageRef = ref(storage, `carImages/${img.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, img);
 
     uploadTask.on(
       "state_changed",
@@ -487,7 +487,7 @@ function CarManagement() {
                   />
                 </Grid>
 
-                <Grid item md={6} xs={12} lg={4} marginTop={2}>
+                {/* <Grid item md={6} xs={12} lg={4} marginTop={2}>
                   <br />
                   <TextField
                     label="Image Url"
@@ -497,7 +497,7 @@ function CarManagement() {
                     value={url}
                     onChange={(e) => SetUrl(e.target.value)}
                   />
-                </Grid>
+                </Grid> */}
 
                 <Grid item md={6} xs={12} lg={4} marginTop={2}>
                   <br />
@@ -513,32 +513,37 @@ function CarManagement() {
                   />
                 </Grid>
 
-                <Grid item md={6} xs={12} lg={4} marginTop={2}>
+                <Grid item md={6} xs={12} lg={4} marginTop={5}>
                   <div style={{ display: "flex" }}>
                     <input
                       type="file"
                       name={imgUrl}
                       onChange={(e) => setImg(e.target.files[0])}
                     />
-                    <input type="submit" value="Upload" onClick={imgUpload} />
+                    <Button
+                        variant="contained"
+                        type="Submit"
+                        color="success"
+                        onClick={imgUpload}
+                      >
+                        Upload
+                      </Button>
                   </div>
                   {progress ? <h4>Image uploaded:{progress}%</h4> : null}
                 </Grid>
               </Grid>
 
               <div style={{ justifyContent: "end", display: "flex" }}>
-                <input
-                  type="submit"
-                  value="submit"
-                  style={{ width: 100, height: 50 }}
-                />
+              <Button variant="contained" type="Submit">
+                    Submit
+                  </Button>
               </div>
             </Box>
           </form>
         </Box>
       </Modal>
       {/* modal edn */}
-      <Box sx={{ flexGrow: 1, paddingLeft: 40 }}>
+      <Box sx={{ flexGrow: 1, paddingLeft: 40, paddingRight: 10, marginBottom: 10 }}>
       <Typography variant='h4' component='h6' marginLeft={10} fontWeight={'bold'} fontFamily="egoe UI" marginBottom={10} >Car Management</Typography>
         <div style={{ justifyContent: "end" }}>
           <Link to="/admin/addcars">

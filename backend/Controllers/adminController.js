@@ -104,7 +104,7 @@ const userManagement = asyncHandler(async(req,res)=>{
 
 const AddCarRoute = asyncHandler(async (req, res) => {
 
-    const { url,brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,imgUrl,imgName,Longdescription,latitude ,longitude} = req.body
+    const { brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,imgUrl,imgName,Longdescription,latitude ,longitude} = req.body
   
 
     // console.log(Image);
@@ -113,7 +113,7 @@ const AddCarRoute = asyncHandler(async (req, res) => {
 
     // console.log("Working");
 
-    const data = await AddCar.create({ url,brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,imgUrl,imgName,latitude ,longitude,Longdescription,"OfferStatus":false,prevAmount:''})
+    const data = await AddCar.create({ brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,imgUrl,imgName,latitude ,longitude,Longdescription,"OfferStatus":false,prevAmount:''})
 
     // console.log("00000000000000000",data);
     if (data) {

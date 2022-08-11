@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Image, ListGroup, Card,} from 'react-bootstrap'
 import { Button, CardMedia, Grid, Typography } from "@mui/material";
 import { Container, Row, Col } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
-import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { format, toDate } from "date-fns";
 import axios from "axios";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
@@ -14,11 +15,15 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Review from "../components/Review/Review";
 import Tooltip from "@mui/material/Tooltip";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import Review from "../components/Review/Review";
+import { createProductReview } from '../reviewAction/reviewAction'
+import { PRODUCT_CREATE_REVIEW_RESET } from '../reviewConstant/reviewConstant'
+import {FaStar} from 'react-icons/fa'
+import Message from '../components/Message/Message'
 
-const CarDetails = () => {
+const CarDetails = ({ match }) => {
   const [value, setValue] = React.useState([null, null]);
   const [dummyAmount, setDummyAmount] = useState(0);
   const [carData, setCarData] = useState({});
@@ -31,6 +36,8 @@ const CarDetails = () => {
   const [bookStatus, setBookStatus] = useState(false);
   const [pageRender, setPageRender] = useState(false);
   const [DateAvailability, SetDateAvailability] = useState(false);
+  const [rating, setRating] = useState(0)
+  const [comment, setComment] = useState('')
   const val = format(new Date(value[0]), "dd/MM/yyyy ");
   const val2 = format(new Date(value[1]), "dd/MM/yyyy ");
   const { slug } = useParams();
@@ -38,26 +45,33 @@ const CarDetails = () => {
   const userId = JSON.parse(user);
   const USERID = user ? userId._id : null;
 
+  const productDetails = useSelector((state) => state.productDetails)
+  const { product } = productDetails
+
+  const productReviewCreate = useSelector((state) => state.productReviewCreate)
+  const {
+    success: successProductReview,
+    error: errorProductReview,
+  } = productReviewCreate 
+
   const idInfo = id2.id;
 
   const gettingData = () => {
     try {
-      axios
-        .post(`/api/user/GetSingleCar/${id2.id}`)
-        .then((response) => {
-          // console.log(response.data);
-          setCarData(response.data);
-          setDummyAmount(response.data.price);
-          setCarID(response.data._id);
-          dispatch({
-            type: "lattitude",
-            payload: response.data.latitude,
-          });
-          dispatch({
-            type: "longitude",
-            payload: response.data.longitude,
-          });
+      axios.post(`/api/user/GetSingleCar/${id2.id}`).then((response) => {
+        // console.log(response.data);
+        setCarData(response.data);
+        setDummyAmount(response.data.price);
+        setCarID(response.data._id);
+        dispatch({
+          type: "lattitude",
+          payload: response.data.latitude,
         });
+        dispatch({
+          type: "longitude",
+          payload: response.data.longitude,
+        });
+      });
     } catch (error) {
       console.log(error);
     }
@@ -116,20 +130,17 @@ const CarDetails = () => {
 
   const getWishlistData = () => {
     try {
-      axios
-        .post("/api/user/getDataFromWishlist", { USERID })
-        .then((res) => {
-          // console.log(res.data.wishlist);
-          setWishListData(res.data.wishlist);
-        });
+      axios.post("/api/user/getDataFromWishlist", { USERID }).then((res) => {
+        // console.log(res.data.wishlist);
+        setWishListData(res.data.wishlist);
+      });
     } catch (error) {}
   };
 
   const removeFromWishlist = async () => {
-    const data = await axios.post(
-      `/api/user/removeFromWishlist/${id2.id}`,
-      { USERID }
-    );
+    const data = await axios.post(`/api/user/removeFromWishlist/${id2.id}`, {
+      USERID,
+    });
     // console.log(data.data);
     setUpdate(false);
   };
@@ -137,17 +148,15 @@ const CarDetails = () => {
   const HandleBookNow = (id) => {
     // console.log(id);
     try {
-      axios
-        .post(`/api/user/checkdate`, { val, val2, id })
-        .then((res) => {
-          // console.log(res);
-          SetDateAvailability(res.data.message);
-          if (res.data.message === "Car Not Available For this Time Period") {
-            SetDateAvailability(true);
-          } else {
-            navigate(`/booking/${id2.id}`);
-          }
-        });
+      axios.post(`/api/user/checkdate`, { val, val2, id }).then((res) => {
+        // console.log(res);
+        SetDateAvailability(res.data.message);
+        if (res.data.message === "Car Not Available For this Time Period") {
+          SetDateAvailability(true);
+        } else {
+          navigate(`/booking/${id2.id}`);
+        }
+      });
     } catch (error) {
       console.log("triggred");
     }
@@ -175,6 +184,25 @@ const CarDetails = () => {
   const callingMap = () => {
     navigate("/map");
   };
+
+  useEffect(() => {
+    if (successProductReview) {
+      alert('Review Submitted!')
+      setRating(0)
+      setComment('')
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+    }
+   }, [dispatch, match, successProductReview])
+
+   const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(
+      createProductReview( {
+        rating,
+        comment,
+      })
+    )
+  }
 
   return (
     <Helmet>
@@ -204,14 +232,10 @@ const CarDetails = () => {
                   </h6>
 
                   <span className=" d-flex align-items-center gap-2">
-                    <span style={{ color: "#f9a826" }}>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                    </span>
-                    {/* ({singleCarItem.rating} ratings) */}
+                  <Review
+                  value={carData.rating}
+                  text={`${carData.numReviews} reviews`}
+                />
                   </span>
                 </div>
 
@@ -299,7 +323,7 @@ const CarDetails = () => {
                     md={12}
                     lg={4}
                     xl={4}
-                    style={{ display: "flex", marginBottom:'4rem' }}
+                    style={{ display: "flex", marginBottom: "4rem" }}
                   >
                     <Col>
                       <Typography variant="h5" component="p">
@@ -411,14 +435,14 @@ const CarDetails = () => {
                           <div>
                             {totalAmount === 0 ? (
                               <Button
-                                variant="outlined"
+                                variant="contained"
                                 onClick={() => setBookStatus(true)}
                               >
                                 Book Now
                               </Button>
                             ) : (
                               <Button
-                                variant="outlined"
+                                variant="contained"
                                 onClick={() => HandleBookNow(carData._id)}
                               >
                                 Book Now
@@ -426,13 +450,19 @@ const CarDetails = () => {
                             )}
                             {test ? (
                               <Button
+                                variant="contained"
                                 sx={{ marginLeft: 3 }}
                                 onClick={removeFromWishlist}
                               >
                                 Remove from Wishlist{" "}
                               </Button>
                             ) : (
-                              <Button sx={{ marginLeft: 3 }} onClick={wishlist}>
+                              <Button
+                                sx={{ marginLeft: 3 }}
+                                variant="contained"
+                                color='error'
+                                onClick={wishlist}
+                              >
                                 Add To Wishlist
                               </Button>
                             )}
@@ -458,7 +488,69 @@ const CarDetails = () => {
               </Paper>
             </Grid>
 
-            <Review id={idInfo} />
+            {/* <Review id={idInfo} /> */}
+            <Row>
+          <Col md={6}>
+            <h2>Reviews</h2>
+            {product.reviews.length === 0 && <Message>No Reviews</Message>}
+               <ListGroup variant='flush'>
+                 {product.reviews.map((review) => (
+                   <ListGroup.Item key={review._id}>
+                     <strong>{review.name}</strong>
+                     <Review value={review.rating} />
+                     <p>{review.createdAt.substring(0, 10)}</p>
+                     <p>{review.comment}</p>
+                   </ListGroup.Item>
+                 ))}
+                 <ListGroup.Item>
+                 {errorProductReview && (
+                     <Message variant='danger'>{errorProductReview}</Message>
+                   )}
+                   {user ? (
+                     <form className="form" onSubmit={submitHandler}>
+                     <div>
+                       <h2>Write a customer review</h2>
+                     </div>
+                     <div>
+                       <label htmlFor="rating">Rating</label>
+                       <select id="rating" value={rating}
+                        onChange={(e) => setRating(e.target.value)}>
+                           <option value="">Select</option>
+                           <option value="1">1- Bad</option>
+                           <option value="2">2- Fair</option>
+                           <option value="3">3- Good</option>
+                           <option value="4">4- Very good</option>
+                           <option value="5">5- Excellent</option>
+
+                       </select>
+                     </div>
+                       <div>
+                       <label htmlFor="comment">Comment</label>
+                       <textarea
+                         id="comment"
+                         value={comment}
+                         onChange={(e) => setComment(e.target.value)}
+                       ></textarea>
+                     </div>
+                    
+                     <div>
+                       <label />
+                       <button className="primary" type="submit">
+                         Submit
+                       </button>
+                     </div>
+                     
+                   </form>
+                     
+                   ) : (<Message>Please <Link to='/login'
+                   >sign in</Link>to write a review</Message>)}
+                   
+                 </ListGroup.Item>
+              </ListGroup>
+              
+
+          </Col>
+        </Row>
           </Row>
         </Container>
       </section>
