@@ -17,6 +17,7 @@ const appreducer = combineReducers({
     lng:Longitude,
     productReviewCreate: productReviewCreateReducer,
     productDetails: productDetailsReducer,
+    userLogin: userLoginReducer
 })
 
 
@@ -119,10 +120,33 @@ function productDetailsReducer  (
     }
   }
 
+  function userLoginReducer  (state = {}, action)  {
+    switch (action.type) {
+      case 'USER_LOGIN_REQUEST':
+        return { loading: true }
+      case 'USER_LOGIN_SUCCESS':
+        return { loading: false, userInfo: action.payload }
+      case 'USER_LOGIN_FAIL':
+        return { loading: false, error: action.payload }
+      case 'USER_LOGOUT':
+        return {}
+      default:
+        return state
+    }
+  }
+
+  const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null
+
+const initialState = {
+ userLogin: { userInfo: userInfoFromStorage },
+}
+
 const middleware = [thunk]
 
 
-const store = createStore(appreducer, composeWithDevTools(applyMiddleware(...middleware)))
+const store = createStore(appreducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))
 
 
 export default store

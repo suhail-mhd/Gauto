@@ -54,6 +54,9 @@ const CarDetails = ({ match }) => {
     error: errorProductReview,
   } = productReviewCreate 
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const idInfo = id2.id;
 
   const gettingData = () => {
@@ -158,7 +161,7 @@ const CarDetails = ({ match }) => {
         }
       });
     } catch (error) {
-      console.log("triggred");
+      console.log("triggered");
     }
   };
 
@@ -197,7 +200,7 @@ const CarDetails = ({ match }) => {
    const submitHandler = (e) => {
     e.preventDefault()
     dispatch(
-      createProductReview( {
+      createProductReview(match.params.id, {
         rating,
         comment,
       })
@@ -506,7 +509,7 @@ const CarDetails = ({ match }) => {
                  {errorProductReview && (
                      <Message variant='danger'>{errorProductReview}</Message>
                    )}
-                   {user ? (
+                   {userInfo ? (
                      <form className="form" onSubmit={submitHandler}>
                      <div>
                        <h2>Write a customer review</h2>

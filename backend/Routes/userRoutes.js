@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router()
+const protect = require( '../Middleware/authMiddleware')
 const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview } = require('../Controllers/userController')
 
 router.route('/signup').post(RegisterUser)  
@@ -66,6 +67,6 @@ router.route('/cancel/:id').post(cancel)
 
 router.route('/mapBoxToken').get(mapBoxToken)
 
-router.route('/:id/reviews').post(createProductReview)
+router.route('/:id/reviews').post(protect, createProductReview)
 
 module.exports = router;
