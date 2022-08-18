@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router()
 const protect = require( '../Middleware/authMiddleware')
-const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview } = require('../Controllers/userController')
+const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataTowishlist, getdatafromwishlist, getallwishlistdata, removefromwishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview } = require('../Controllers/userController')
 
 router.route('/signup').post(RegisterUser)  
 
@@ -45,13 +45,13 @@ router.route('/getCoupon').post(getCoupon)
 
 router.route('/applyCoupon').post(applyCoupon)
 
-router.route('/dataToWishlist/:id').post(dataToWishlist)
+router.route('/dataTowishlist/:id').post(dataTowishlist)
 
-router.route('/getDataFromWishlist').post(getDataFromWishlist)
+router.route('/getdatafromwishlist').post(getdatafromwishlist)
 
-router.route('/getAllWishlistData').post(getAllWishlistData)
+router.route('/getallwishlistdata').post(getallwishlistdata)
 
-router.route('/removeFromWishlist/:id').post(removeFromWishlist)
+router.route('/removefromwishlist/:id').post(removefromwishlist)
 
 router.route('/completedTrips').post(completedTrips)
 

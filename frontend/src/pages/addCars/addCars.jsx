@@ -11,6 +11,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../Firebase/Firebase";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import SideBar from '../../components/sideBar/sideBar'
+import NativeSelect from "@mui/material/NativeSelect";
 
 function AddCars() {
   const {
@@ -27,6 +28,8 @@ function AddCars() {
   const [progress, setProgress] = useState(0);
   const [imgUrl, setImageUrl] = useState("");
   const [imgName, setImgName] = useState();
+  const [query, setQuery] = useState("");
+  const [cars, setCars] = useState([]);
 
   console.log(imgName);
 
@@ -34,8 +37,6 @@ function AddCars() {
     const {brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,Longdescription ,latitude ,longitude} = data
     
     console.log(brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,latitude ,longitude);
-
-
 
     try {
           // setloading(true)
@@ -60,6 +61,26 @@ function AddCars() {
     //  setloading(false)
  }
 }
+
+const rapidBrandName = (e) => {
+  setQuery(e.target.value)
+  const options = {
+    method: 'GET',
+    url: 'https://car-data.p.rapidapi.com/cars',
+    params: {limit: '10', page: '0', make: `${e.target.value}`},
+    headers: {
+      'X-RapidAPI-Key': 'c2509079abmsh8b7139668dd75fbp1f4faejsn6c5f4d8dd4ac',
+      'X-RapidAPI-Host': 'car-data.p.rapidapi.com'
+    }
+  };
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
+
 
   useEffect(() => {
     if (loc) {
@@ -119,8 +140,8 @@ function AddCars() {
               onSubmit={handleSubmit(submitHandle)}
               encType="multipart/form-data"
             >
-              <Box>
-                <Grid container>
+                <Box>
+                  <Grid container>
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
                     <label
                       style={{ color: "red", fontSize: "12px" }}
@@ -136,11 +157,20 @@ function AddCars() {
                       placeholder="Enter Name"
                       type="text"
                       name="brand"
-                      {...register("brand", {
-                        required: "brand is required",
-                        minLength: { value: 2, message: "minimum length is 2" },
-                      })}
+                      // {...register("brand", {
+                      //   required: "brand is required",
+                      //   minLength: { value: 2, message: "minimum length is 2" },
+                      // })}
+                      onChange={(e) => rapidBrandName(e)}
                     />
+                   
+                      {/* <NativeSelect
+                id="demo-customized-select-native"
+                label="Brand Name"
+              >
+                <option aria-label="None" value="" />
+                <option>{data.make}</option>
+              </NativeSelect> */}
                   </Grid>
 
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
@@ -161,6 +191,13 @@ function AddCars() {
                         minLength: { value: 2, message: "minimum length is 2" },
                       })}
                     />
+                        {/* <NativeSelect
+                id="demo-customized-select-native"
+                label="Model Name"
+              >
+                <option aria-label="None" value="" />
+                <option>{data.model}</option>
+              </NativeSelect> */}
                   </Grid>
 
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
@@ -315,26 +352,6 @@ function AddCars() {
                     />
                   </Grid>
 
-                  {/* <Grid item md={6} xs={12} lg={4} marginTop={2}>
-                    <label
-                      style={{ color: "red", fontSize: "12px" }}
-                      htmlFor=""
-                    >
-                      {errors.register && errors.url.message}
-                    </label>
-                    <br />
-                    <TextField
-                      label="Image Url"
-                      placeholder="Enter Car image Url"
-                      type="url"
-                      name="url"
-                      {...register("url", {
-                        required: "image url is required",
-                        minLength: { value: 2, message: "minimum length is 2" },
-                      })}
-                    />
-                  </Grid> */}
-
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
                     <label
                       style={{ color: "red", fontSize: "12px" }}
@@ -463,6 +480,7 @@ function AddCars() {
                   </Button>
                 </div>
               </Box>
+             
             </form>
           </Paper>
         </Box>

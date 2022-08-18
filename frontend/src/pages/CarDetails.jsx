@@ -28,7 +28,7 @@ const CarDetails = ({ match }) => {
   const [dummyAmount, setDummyAmount] = useState(0);
   const [carData, setCarData] = useState({});
   const [carId, setCarID] = useState();
-  const [wishlistData, setWishListData] = useState([]);
+  const [wishlistdata,setWishListData] = useState([])
   const id2 = useParams();
   const [update, setUpdate] = useState(false);
   const navigate = useNavigate();
@@ -58,6 +58,8 @@ const CarDetails = ({ match }) => {
   const { userInfo } = userLogin
 
   const idInfo = id2.id;
+
+  console.log(id2);
 
   const gettingData = () => {
     try {
@@ -111,42 +113,42 @@ const CarDetails = ({ match }) => {
 
   var test = false;
 
-  wishlistData?.filter((item) => {
-    if (item === carData._id) {
+  // console.log(wish);
+
+   wishlistdata.length > 0 && wishlistdata.filter((item)=>{
+    if(item === carData._id){
       test = true;
-    } else {
-      test = false;
+    }else{
+      test = false
     }
-  });
+  })
 
   const wishlist = () => {
-    axios
-      .post(`/api/user/dataToWishlist/${id2.id}`, {
-        USERID,
-      })
-      .then((res) => {
-        // console.log(res);
+    axios.post(`/api/user/dataTowishlist/${id2.id}`,{USERID}).then((res)=>{
+      // console.log(res);
+  
+      setUpdate(true)
+    })
+  }
 
-        setUpdate(true);
-      });
-  };
-
-  const getWishlistData = () => {
+  const getwishlistdata = () => {
     try {
-      axios.post("/api/user/getDataFromWishlist", { USERID }).then((res) => {
-        // console.log(res.data.wishlist);
-        setWishListData(res.data.wishlist);
-      });
-    } catch (error) {}
-  };
+      axios.post('/api/user/getdatafromwishlist',{USERID}).then((res)=>{
+        console.log(res.data.wishlist);
+        setWishListData(res.data.wishlist)
+      })
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  const removeFromWishlist = async () => {
-    const data = await axios.post(`/api/user/removeFromWishlist/${id2.id}`, {
-      USERID,
-    });
+  const removefromwishlist = async() => {
+    const data = await axios.post(`/api/user/removefromwishlist/${id2.id}`,{USERID})
     // console.log(data.data);
-    setUpdate(false);
-  };
+    setUpdate(false)
+  }
+    
 
   const HandleBookNow = (id) => {
     // console.log(id);
@@ -168,7 +170,7 @@ const CarDetails = ({ match }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     gettingData();
-    getWishlistData();
+    getwishlistdata()
 
     setPageRender(true);
   }, [update, pageRender]);
@@ -200,7 +202,8 @@ const CarDetails = ({ match }) => {
    const submitHandler = (e) => {
     e.preventDefault()
     dispatch(
-      createProductReview(match.params.id, {
+      
+      createProductReview(id2.id, {
         rating,
         comment,
       })
@@ -208,7 +211,7 @@ const CarDetails = ({ match }) => {
   }
 
   return (
-    <Helmet>
+    <Helmet title="Car Detail">
       <section>
         <Container>
           <Row>
@@ -451,24 +454,25 @@ const CarDetails = ({ match }) => {
                                 Book Now
                               </Button>
                             )}
-                            {test ? (
+                            {test ? 
                               <Button
                                 variant="contained"
+                                color='error'
                                 sx={{ marginLeft: 3 }}
-                                onClick={removeFromWishlist}
+                                onClick={removefromwishlist}
                               >
                                 Remove from Wishlist{" "}
                               </Button>
-                            ) : (
+                             : 
                               <Button
                                 sx={{ marginLeft: 3 }}
                                 variant="contained"
-                                color='error'
+                                color='success'
                                 onClick={wishlist}
                               >
                                 Add To Wishlist
                               </Button>
-                            )}
+                            }
                           </div>
                         ) : (
                           <Typography

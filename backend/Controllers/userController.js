@@ -615,7 +615,7 @@ const applyCoupon = asyncHandler(async(req,res)=>{
 
 // wishlist
 
-const dataToWishlist = asyncHandler(async(req,res)=>{
+const dataTowishlist = asyncHandler(async(req,res)=>{
   const carId = req.params.id
   const data = req.body.USERID
 
@@ -640,7 +640,7 @@ const dataToWishlist = asyncHandler(async(req,res)=>{
  
 })
 
-const getDataFromWishlist = asyncHandler(async(req,res)=>{
+const getdatafromwishlist = asyncHandler(async(req,res)=>{
 
 
   const id = req.body.USERID
@@ -654,13 +654,13 @@ const getDataFromWishlist = asyncHandler(async(req,res)=>{
       wishlist:user.wishlist
     })
   }else{
-    res.status(400).send("error occured while searching user id in wishlist data")
+    res.status(400).send("error occured while seaching user id in wishlist data")
   }
 
   console.log(user);
 })
 
-const getAllWishlistData = asyncHandler(async(req,res)=>{
+const getallwishlistdata = asyncHandler(async(req,res)=>{
 
   const id = req.body.USERID
 
@@ -683,7 +683,7 @@ const getAllWishlistData = asyncHandler(async(req,res)=>{
 })
 
 
-const removeFromWishlist = asyncHandler(async(req,res)=>{
+const removefromwishlist = asyncHandler(async(req,res)=>{
   
   const userId = req.body.USERID
   const carId = req.params.id
@@ -875,4 +875,4 @@ const mapBoxToken = asyncHandler(async(req,res)=>{
 
 
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataToWishlist, getDataFromWishlist, getAllWishlistData, removeFromWishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview }
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataTowishlist, getdatafromwishlist, getallwishlistdata, removefromwishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview }

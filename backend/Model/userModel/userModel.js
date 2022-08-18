@@ -41,7 +41,14 @@ const userSchema = mongoose.Schema({
     isBlock:{
         type:Boolean,
         required:String
-    }
+    },
+    wishlist: [
+        {
+          type: mongoose.Types.ObjectId,
+          ref: 'Cars',
+          default: [],
+        },
+      ]
 },{
     timestamps: true
 });

@@ -47,21 +47,22 @@ function WishList() {
     setOpen(true);
   }
 
-  const getAllWishlistData  = () => {
-     axios.post('/api/user/getAllWishlistData',{USERID}).then((res)=>{
-      // console.log(res);
-      setCarId(res.data)
-    })
-  }
+  const getallwishlistdata  = () => {
+    axios.post('/api/user/getallwishlistdata',{USERID}).then((res)=>{
+     // console.log(res);
+     setCarId(res.data)
+   })
+ }
 
-  const removeFromWishlist = async() => {
-    const data = await  axios.post(`/api/user/removeFromWishlist/${removeId}`,{USERID})
-      setRender(true)
-      setOpen(false); 
-  }
+
+ const removefromwishlist = async() => {
+  const data = await  axios.post(`/api/user/removefromwishlist/${removeId}`,{USERID})
+    setRender(true)
+    setOpen(false); 
+}
   
   useEffect(()=>{
-      getAllWishlistData()  
+    getallwishlistdata()   
       setRender(false)
   },[render])
 
@@ -84,7 +85,7 @@ function WishList() {
             Are you sure want to Remove
           </Typography>
       <Box sx={{justifyContent:'center',display:'flex'}} >
-      <Button onClick={removeFromWishlist} >Yes</Button>
+      <Button onClick={removefromwishlist} >Yes</Button>
       <Button onClick={()=>setOpen(false)} >No</Button>
       </Box>
         </Box>
