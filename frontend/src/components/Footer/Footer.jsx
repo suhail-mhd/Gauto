@@ -11,17 +11,8 @@ const quickLinks = [
   },
 
   {
-    path: "#",
-    display: "Privacy Policy",
-  },
-
-  {
     path: "/cars",
     display: "Car Listing",
-  },
-  {
-    path: "/blogs",
-    display: "Blog",
   },
 
   {
@@ -43,7 +34,7 @@ const Footer = (props) => {
             <div className="logo footer__logo">
               <h1>
                 <Link to="/home" className=" d-flex align-items-center gap-2">
-                <img src='../logo.png' style={{height:50}} alt='Roadsters Logo' />
+                <img src='../logo.png' style={{height:50}} alt='Gauto Logo' />
                 </Link>
               </h1>
             </div>

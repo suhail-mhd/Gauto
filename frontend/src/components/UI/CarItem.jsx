@@ -31,7 +31,7 @@ const Div = styled("div")(({ theme }) => ({
 }));
 
 function Cards() {
-  const [visible, setVisible] = useState(4);
+  const [visible, setVisible] = useState(3);
   const [carsData, setCarsData] = useState([]);
   const [render, SetRender] = useState(false);
   const [userId, setUserId] = useState("");
@@ -55,7 +55,7 @@ function Cards() {
 
   const userInfo = localStorage.getItem("userInfo");
   const value = JSON.parse(userInfo);
-    const DistrictSort = useSelector((state) => state.DisSort);
+  const DistrictSort = useSelector((state) => state.DisSort);
 
   const Datas = () => {
     if (userInfo) {
@@ -64,24 +64,22 @@ function Cards() {
   };
 
   const showMoreItem = () => {
-    setVisible((prevValue) => prevValue + 4);
+    setVisible((prevValue) => prevValue + 3);
   };
 
   const showLessItem = () => {
-    setVisible((prevValue) => prevValue - 4);
+    setVisible((prevValue) => prevValue - 3);
   };
 
   const navigate = useNavigate();
 
   const GetCars = async () => {
-    const data = await axios
-      .get('/api/user/getcarData')
-      .then((res) => {
-        // console.log(res.data.data)
+    const data = await axios.get("/api/user/getcarData").then((res) => {
+      // console.log(res.data.data)
 
-        setCarsData(res.data.data);
-        SetRender(true);
-      });
+      setCarsData(res.data.data);
+      SetRender(true);
+    });
 
     // console.log(data);
   };
@@ -102,12 +100,10 @@ function Cards() {
     // console.log(searchText);
 
     try {
-      axios
-        .post("/api/user/search", { searchText })
-        .then((res) => {
-          // console.log(res.data.data);
-          setSearchData(res.data.data);
-        });
+      axios.post("/api/user/search", { searchText }).then((res) => {
+        // console.log(res.data.data);
+        setSearchData(res.data.data);
+      });
       SetSearchData(true);
     } catch (error) {
       console.log("error occurred while searching", error);
@@ -144,8 +140,6 @@ function Cards() {
     setSearchText("");
   };
 
-
-
   useEffect(() => {
     GetCars();
     Datas();
@@ -167,32 +161,31 @@ function Cards() {
             xl={4}
             style={{ display: "flex" }}
           >
-           <div className="d-flex" style={{marginTop:"-1rem"}}>
-           <span className=" d-flex align-items-center gap-2">
-              <i class="ri-sort-asc"></i> Sort By
-            </span>
-            <Box sx={{ marginTop: 1 }}>
-              <Button
-                aria-describedby={id}
-                type="button"
-                style={{ marginLeft: 80, marginTop: 1 }}
-                onClick={handleClick}
-              >
-                Price
-              </Button>
-              <Popper id={id} open={open} anchorEl={anchorEl}>
-                <Box sx={{ border: 1, p: 1, bgcolor: "white" }}>
-                  <Button onClick={lowToHigh}>Price--Low to high</Button>
-                  <br />
-                  <Button onClick={highToLow}>Price--High to low</Button>
-                </Box>
-              </Popper>
-            </Box>
-           </div>
+            <div className="d-flex" style={{ marginTop: "-1rem" }}>
+              <span className=" d-flex align-items-center gap-2">
+                <i class="ri-sort-asc"></i> Sort By
+              </span>
+              <Box sx={{ marginTop: 1 }}>
+                <Button
+                  aria-describedby={id}
+                  type="button"
+                  style={{ marginLeft: 80, marginTop: 1 }}
+                  onClick={handleClick}
+                >
+                  Price
+                </Button>
+                <Popper id={id} open={open} anchorEl={anchorEl}>
+                  <Box sx={{ border: 1, p: 1, bgcolor: "white" }}>
+                    <Button onClick={lowToHigh}>Price--Low to high</Button>
+                    <br />
+                    <Button onClick={highToLow}>Price--High to low</Button>
+                  </Box>
+                </Popper>
+              </Box>
+            </div>
           </Grid>
 
           <Grid sm={12} xs={12} md={6} lg={4} xl={4}>
-            
             <Box sx={{ marginTop: 1, marginLeft: 4, maxWidth: 400 }}>
               <District />
             </Box>
@@ -234,7 +227,7 @@ function Cards() {
       </Container>
 
       <br />
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" style={{ marginBottom:"2rem"}}>
         {SearchData ? (
           <Grid container>
             {searchData.slice(0, visible).map((obj, index) => {
@@ -246,7 +239,7 @@ function Cards() {
                       margin: 15,
                       Height: "auto",
                       position: "relative",
-                      minHeight: 600,
+                      minHeight: 620,
                     }}
                     className="card"
                   >
@@ -266,11 +259,11 @@ function Cards() {
                         }}
                       >
                         <Typography gutterBottom variant="h5" component="div">
-                          {obj.brand} {obj.model}
+                          <strong>{obj.brand} {obj.model}</strong>
                           {/* <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />}   /> */}
                         </Typography>
 
-                        <Typography gutterBottom variant="h6" component="div">
+                        <Typography gutterBottom variant="h6" component="div" style={{fontSize:"15px"}}>
                           ${obj.price}/day
                         </Typography>
                       </div>
@@ -281,10 +274,10 @@ function Cards() {
                             variant="BUTTON TEXT"
                             component="div"
                           >
-                            Orginal Price :
+                            <span style={{fontWeight:"bold"}}>Orginal Price :</span> 
                           </Typography>
                           <Typography
-                            style={{ textDecoration: "line-through" }}
+                            style={{ textDecoration: "line-through", marginLeft:"10px" }}
                             variant="subtitle2"
                           >
                             ${obj.prevAmount}
@@ -292,7 +285,7 @@ function Cards() {
                         </Box>
                       ) : null}
                       <Typography variant="subtitle2" color="text.secondary">
-                        Available in :{obj.location}
+                        <span style={{fontWeight:"bold"}}>Available in :</span> {obj.location}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -331,7 +324,7 @@ function Cards() {
                       margin: 15,
                       Height: "auto",
                       position: "relative",
-                      minHeight: 600,
+                      minHeight: 620,
                     }}
                     className="card"
                   >
@@ -351,10 +344,10 @@ function Cards() {
                         }}
                       >
                         <Typography gutterBottom variant="h5" component="div">
-                          {obj.brand} {obj.model}
+                          <strong>{obj.brand} {obj.model}</strong>
                         </Typography>
 
-                        <Typography gutterBottom variant="h6" component="div">
+                        <Typography gutterBottom variant="h6" component="div" style={{fontSize:"15px"}}>
                           ${obj.price}/day
                         </Typography>
                       </div>
@@ -365,10 +358,10 @@ function Cards() {
                             variant="BUTTON TEXT"
                             component="div"
                           >
-                            Orginal Price :
+                            <span style={{fontWeight:"bold"}}>Orginal Price :</span> 
                           </Typography>
                           <Typography
-                            style={{ textDecoration: "line-through" }}
+                            style={{ textDecoration: "line-through", marginLeft:"10px" }}
                             variant="subtitle2"
                           >
                             ${obj.prevAmount}
@@ -376,7 +369,7 @@ function Cards() {
                         </Box>
                       ) : null}
                       <Typography variant="subtitle2" color="text.secondary">
-                        Available in :{obj.location}
+                        <span style={{fontWeight:"bold"}}>Available in :</span> {obj.location}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -415,7 +408,7 @@ function Cards() {
                       margin: 15,
                       Height: "auto",
                       position: "relative",
-                      minHeight: 600,
+                      minHeight: 620,
                     }}
                     className="card"
                   >
@@ -435,10 +428,10 @@ function Cards() {
                         }}
                       >
                         <Typography gutterBottom variant="h5" component="div">
-                          {obj.brand} {obj.model}
+                          <strong>{obj.brand} {obj.model}</strong>
                         </Typography>
 
-                        <Typography gutterBottom variant="h6" component="div">
+                        <Typography gutterBottom variant="h6" component="div" style={{fontSize:"15px"}}>
                           ${obj.price}/day
                         </Typography>
                       </div>
@@ -449,10 +442,10 @@ function Cards() {
                             variant="BUTTON TEXT"
                             component="div"
                           >
-                            Orginal Price :
+                            <span style={{fontWeight:"bold"}}>Orginal Price :</span> 
                           </Typography>
                           <Typography
-                            style={{ textDecoration: "line-through" }}
+                            style={{ textDecoration: "line-through", marginLeft:"10px" }}
                             variant="subtitle2"
                           >
                             ${obj.prevAmount}
@@ -460,7 +453,7 @@ function Cards() {
                         </Box>
                       ) : null}
                       <Typography variant="subtitle2" color="text.secondary">
-                        Available in :{obj.location}
+                        <span style={{fontWeight:"bold"}}>Available in :</span> {obj.location}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -488,8 +481,7 @@ function Cards() {
               );
             })}
           </Grid>
-        ) 
-        : DistrictSort.length > 0 ? (
+        ) : DistrictSort.length > 0 ? (
           <Grid container>
             {DistrictSort.slice(0, visible).map((obj, index) => {
               return (
@@ -500,7 +492,7 @@ function Cards() {
                       margin: 15,
                       Height: "auto",
                       position: "relative",
-                      minHeight: 600,
+                      minHeight: 620,
                     }}
                     className="card"
                   >
@@ -520,10 +512,10 @@ function Cards() {
                         }}
                       >
                         <Typography gutterBottom variant="h5" component="div">
-                          {obj.brand} {obj.model}
+                          <strong>{obj.brand} {obj.model}</strong>
                         </Typography>
 
-                        <Typography gutterBottom variant="h6" component="div">
+                        <Typography gutterBottom variant="h6" component="div" style={{fontSize:"15px"}}>
                           ${obj.price}/day
                         </Typography>
                       </div>
@@ -534,10 +526,10 @@ function Cards() {
                             variant="BUTTON TEXT"
                             component="div"
                           >
-                            Orginal Price :
+                            <span style={{fontWeight:"bold"}}>Orginal Price :</span> 
                           </Typography>
                           <Typography
-                            style={{ textDecoration: "line-through" }}
+                            style={{ textDecoration: "line-through", marginLeft:"10px" }}
                             variant="subtitle2"
                           >
                             ${obj.prevAmount}
@@ -545,7 +537,7 @@ function Cards() {
                         </Box>
                       ) : null}
                       <Typography variant="subtitle2" color="text.secondary">
-                        Available in :{obj.location}
+                        <span style={{fontWeight:"bold"}}>Available in : </span>{obj.location}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -573,8 +565,7 @@ function Cards() {
               );
             })}
           </Grid>
-        ) 
-        : (
+        ) : (
           <Grid container>
             {carsData.slice(0, visible).map((obj, index) => {
               return (
@@ -585,7 +576,7 @@ function Cards() {
                       margin: 15,
                       Height: "auto",
                       position: "relative",
-                      minHeight: 600,
+                      minHeight: 620,
                     }}
                     className="card"
                   >
@@ -605,10 +596,10 @@ function Cards() {
                         }}
                       >
                         <Typography gutterBottom variant="h5" component="div">
-                          {obj.brand} {obj.model}
+                          <strong>{obj.brand} {obj.model}</strong>
                         </Typography>
 
-                        <Typography gutterBottom variant="h6" component="div">
+                        <Typography gutterBottom variant="h6" component="div" style={{fontSize:"15px"}}>
                           ${obj.price}/day
                         </Typography>
                       </div>
@@ -619,10 +610,10 @@ function Cards() {
                             variant="BUTTON TEXT"
                             component="div"
                           >
-                            Orginal Price :
+                            <span style={{fontWeight:"bold"}}>Orginal Price :</span> 
                           </Typography>
                           <Typography
-                            style={{ textDecoration: "line-through" }}
+                            style={{ textDecoration: "line-through", marginLeft:"10px" }}
                             variant="subtitle2"
                           >
                             ${obj.prevAmount}
@@ -630,7 +621,7 @@ function Cards() {
                         </Box>
                       ) : null}
                       <Typography variant="subtitle2" color="text.secondary">
-                        Available in :{obj.location}
+                        <span style={{fontWeight:"bold"}}>Available in :</span> {obj.location}
                       </Typography>
 
                       <Typography
@@ -653,7 +644,6 @@ function Cards() {
                       >
                         BOOK NOW
                       </Button>
-
                     </CardActions>
                   </Card>
                 </Grid>

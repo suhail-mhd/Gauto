@@ -196,13 +196,10 @@ function BookingPage(id) {
       }
     },[pageRender])
 
-  const mapHandle = () => {
-    setMap(true);
-  };
 
   return (
     <Helmet title="booking">
-      <div style={{ marginBottom: "30rem", marginTop: "10rem" }}>
+      <div style={{ marginBottom: "60rem", marginTop: "2rem" }}>
         <Container>
           <Modal
             open={open}
@@ -314,10 +311,6 @@ function BookingPage(id) {
                   >
                     <Typography variant="h6 " component="h5" textAlign="center">
                       Pickup Location: {cardata.location}{" "}
-                      <LocationOnOutlinedIcon
-                        onClick={mapHandle}
-                        style={{ fontSize: 40, cursor: "pointer" }}
-                      />
                     </Typography>
                   </Box>
                 </Paper>
