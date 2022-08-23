@@ -136,11 +136,11 @@ function productDetailsReducer  (
   }
 
   const userInfoFromStorage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
-  : null
+  const userId = JSON.parse(userInfoFromStorage)
+  
 
 const initialState = {
- userLogin: { userInfo: userInfoFromStorage },
+ userLogin: { userInfo: userId },
 }
 
 const middleware = [thunk]

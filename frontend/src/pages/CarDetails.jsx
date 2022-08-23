@@ -237,7 +237,7 @@ const CarDetails = ({ match }) => {
                     ${carData.price}.00 / Day
                   </h6>
 
-                  <span className=" d-flex align-items-center gap-2">
+                  <span className=" d-flex align-items-center">
                     <Review
                       value={carData.rating}
                       text={`${carData.numReviews} reviews`}
@@ -492,9 +492,8 @@ const CarDetails = ({ match }) => {
             <Row>
               <Col md={6}>
                 <h2>Reviews</h2>
-                {product.reviews.length === 0 && <Message>No Reviews</Message>}
                 <ListGroup variant="flush">
-                  {product.reviews.map((review) => (
+                  {carData.reviews?.length > 0 && carData.reviews.map((review) => (
                     <ListGroup.Item key={review._id}>
                       <strong>{review.name}</strong>
                       <Review value={review.rating} />
