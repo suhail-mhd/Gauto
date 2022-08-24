@@ -26,8 +26,8 @@ const style = {
 
 
 function Profile(id) {
-    const [profilePic , setProfilePic] = useState(true)
-    const userId = useParams()
+    const [propic , serPropic] = useState(true)
+    const userid = useParams()
     const [userDataValue , setUserDataValue] = useState({})
     const [updateRes, setUpdateRes] = useState()
     const [snackOpen, snackClose] = useState(false)
@@ -52,6 +52,9 @@ function Profile(id) {
 
     // snackbar
     const SnackClose = () => {
+        // if (reason === 'clickaway') {
+        //   return;
+        // }
     
         snackClose(false);
       };
@@ -89,7 +92,7 @@ function Profile(id) {
         const PasswordResetHandle = (e) => {
             e.preventDefault();
             if(password === confirmPassword){
-                axios.patch(`/api/user/passwordReset/${userId.id}`,{password}).then((res)=>{
+                axios.patch(`/api/user/passwordreset/${userid.id}`,{password}).then((res)=>{
                     console.log(res.data.message);
                     setUpdateRes(res.data.message)
                     snackClose(true)
@@ -117,7 +120,7 @@ function Profile(id) {
 
     const userData = () => {
         try {
-            axios.get(`/api/user/getProfileUserData/${userId.id}`).then((res)=>{
+            axios.get(`/api/user/getprofileuserdata/${userid.id}`).then((res)=>{
                 setUserDataValue(res.data.user)  
                 // console.log(res.data); 
                 setName(res.data.user.name)
@@ -141,7 +144,7 @@ function Profile(id) {
 
 
             try {
-                axios.patch(`/api/user/userUpdate/${userId.id}`,
+                axios.patch(`/api/user/userupdate/${userid.id}`,
                   {  name, email ,phone , gender , district , age ,address}
                 ).then((res)=>{
                     // console.log(res.data.message);
@@ -152,7 +155,7 @@ function Profile(id) {
                 setOpen(false)
             } catch (error) {
                 snackClose(false)
-                console.log("Error occurred while data updating",error);
+                console.log("Error occured while data updating",error);
             }
     }
 
@@ -170,7 +173,7 @@ function Profile(id) {
 
 
   return (
-    <div >
+    <div>
       <br/>
         <Snackbar
         open={snackOpen}
@@ -266,14 +269,14 @@ function Profile(id) {
                 </Box>
                 <Grid container sx={{justifyContent:'center',display:'flex'}} >
                         <Grid item  >
-                       <Box marginTop={4} >
-                       <Button variant='contained' style={{borderRadius:'30px'}} sx={{width:200,height:50}} onClick={handleOpen} >Edit</Button>
+                       <Box marginTop={4}  >
+                       <Button variant='contained' sx={{width:200,height:50}} onClick={handleOpen} >Edit</Button>
                        </Box>
                        
                         </Grid>
                         <Grid item  >
                        <Box marginTop={4}  marginLeft={2}  >
-                       <Button variant='contained'  style={{borderRadius:'30px'}} sx={{width:200,height:50}} onClick={HandlePassOpen} >Reset Password</Button>
+                       <Button variant='contained' sx={{width:200,height:50}} onClick={HandlePassOpen} >Reset Password</Button>
                        </Box>
                        
                         </Grid>
@@ -384,7 +387,7 @@ function Profile(id) {
             </Grid>
             
             <Box sx={{display:'flex',justifyContent:'center'}} >
-               <Button type='submit'  style={{borderRadius:'30px'}} sx={{height:50}} variant='contained' >Submit</Button>
+               <Button type='submit' sx={{height:50}} variant='contained' >Submit</Button>
                </Box>
            
            </Grid>
@@ -440,7 +443,7 @@ function Profile(id) {
         
                 </Grid>
                 <Box sx={{display:'flex',justifyContent:'center'}} >
-               <Button type='submit' sx={{height:40}}  style={{borderRadius:'30px'}} variant='contained' >Reset</Button>
+               <Button type='submit' sx={{height:40}} variant='contained' >Reset</Button>
                </Box>
             </Container>
         </form>

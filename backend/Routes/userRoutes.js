@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router()
 const protect = require( '../Middleware/authMiddleware')
-const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataTowishlist, getdatafromwishlist, getallwishlistdata, removefromwishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview } = require('../Controllers/userController')
+const {RegisterUser , loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getprofileuserdata, userupdate, passwordreset, getCoupon, applyCoupon, dataTowishlist, getdatafromwishlist, getallwishlistdata, removefromwishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview } = require('../Controllers/userController')
 
 router.route('/signup').post(RegisterUser)  
 
@@ -35,11 +35,11 @@ router.route('/razorpaysuccess/:id').post(razorpaysuccess)
 
 router.route('/paypal').get(paypal)
 
-router.route('/getProfileUserData/:id').get(getProfileUserData)
+router.route('/getprofileuserdata/:id').get(getprofileuserdata)
 
-router.route('/userUpdate/:id').patch(userUpdate)
+router.route('/userupdate/:id').patch(userupdate)
 
-router.route('/passwordReset/:id').patch(passwordReset)
+router.route('/passwordreset/:id').patch(passwordreset)
 
 router.route('/getCoupon').post(getCoupon)
 

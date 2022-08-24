@@ -466,7 +466,7 @@ const paypal = asyncHandler(async(req,res)=>{
 
 // profile
 
-const getProfileUserData = asyncHandler(async(req,res)=>{
+const getprofileuserdata = asyncHandler(async(req,res)=>{
   // console.log(req.params.id);
   const id = req.params.id
 
@@ -483,7 +483,7 @@ const getProfileUserData = asyncHandler(async(req,res)=>{
 })
 
 
-const userUpdate = asyncHandler(async(req,res)=>{
+const userupdate = asyncHandler(async(req,res)=>{
   // console.log(req.body);
   const userId = req.params.id
   // console.log(userId);
@@ -517,22 +517,22 @@ const userUpdate = asyncHandler(async(req,res)=>{
 })
 
 
-const passwordReset = asyncHandler(async(req,res)=>{
+const passwordreset = asyncHandler(async(req,res)=>{
   // console.log(req.params.id);
   const id = req.params.id
   const passwordText = req.body.password
   const saltRounds = 10;
  
 
-  const bcryptPassword = await bcrypt.hash(passwordText , saltRounds)
+  const Bcryptpassword = await bcrypt.hash(passwordText , saltRounds)
 
-  console.log(bcryptPassword);
+  console.log(Bcryptpassword);
 
 
 
 
   const password = {
-    password:bcryptPassword
+    password:Bcryptpassword
   }
 
 
@@ -875,4 +875,4 @@ const mapBoxToken = asyncHandler(async(req,res)=>{
 
 
 
-  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getProfileUserData, userUpdate, passwordReset, getCoupon, applyCoupon, dataTowishlist, getdatafromwishlist, getallwishlistdata, removefromwishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview }
+  module.exports = {RegisterUser, loginUser, otpnumber, otpvalidate, getCarData, search, lowtohigh, hightolow, getDistrict, searchdistrict, GetSingleCar, checkdate, bookingdata, razorpay, razorpaysuccess, paypal, getprofileuserdata, userupdate, passwordreset, getCoupon, applyCoupon, dataTowishlist, getdatafromwishlist, getallwishlistdata, removefromwishlist, completedTrips, cancelledTrips, cancel, mapBoxToken, createProductReview }
