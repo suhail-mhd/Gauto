@@ -3,15 +3,14 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import { TextField, Typography, Button } from "@mui/material";
+import { TextField, Typography, Button, Autocomplete } from "@mui/material";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../Firebase/Firebase";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import SideBar from '../../components/sideBar/sideBar'
-import NativeSelect from "@mui/material/NativeSelect";
+import SideBar from "../../components/sideBar/sideBar";
 
 function AddCars() {
   const {
@@ -33,54 +32,100 @@ function AddCars() {
 
   console.log(imgName);
 
-  const submitHandle = async(data)=>{
-    const {brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,Longdescription ,latitude ,longitude} = data
-    
-    console.log(brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,latitude ,longitude);
+  const submitHandle = async (data) => {
+    const {
+      brand,
+      model,
+      fueltype,
+      RegNo,
+      price,
+      seats,
+      location,
+      mileage,
+      register,
+      description,
+      Longdescription,
+      latitude,
+      longitude,
+    } = data;
+
+    console.log(
+      brand,
+      model,
+      fueltype,
+      RegNo,
+      price,
+      seats,
+      location,
+      mileage,
+      register,
+      description,
+      latitude,
+      longitude
+    );
 
     try {
-          // setloading(true)
+      // setloading(true)
       const config = {
         headers: {
-            "Content-type": "application/json"
-        }
-      }
+          "Content-type": "application/json",
+        },
+      };
 
-      const data  = await axios.post('/api/admin/addCar',{
-        brand,model,fueltype,RegNo,price,seats,location,mileage,register,description,imgUrl,imgName,Longdescription,latitude ,longitude
-      }
-      ,config)
+      const data = await axios.post(
+        "/api/admin/addCar",
+        {
+          brand,
+          model,
+          fueltype,
+          RegNo,
+          price,
+          seats,
+          location,
+          mileage,
+          register,
+          description,
+          imgUrl,
+          imgName,
+          Longdescription,
+          latitude,
+          longitude,
+        },
+        config
+      );
 
-
-      setresData(data.data)
-      navigate('/admin/carManagement')
-    // setloading(false)
-      
- } catch (error) {
-     console.log(error);
-    //  setloading(false)
- }
-}
-
-const rapidBrandName = (e) => {
-  setQuery(e.target.value)
-  const options = {
-    method: 'GET',
-    url: 'https://car-data.p.rapidapi.com/cars',
-    params: {limit: '10', page: '0', make: `${e.target.value}`},
-    headers: {
-      'X-RapidAPI-Key': 'c2509079abmsh8b7139668dd75fbp1f4faejsn6c5f4d8dd4ac',
-      'X-RapidAPI-Host': 'car-data.p.rapidapi.com'
+      setresData(data.data);
+      navigate("/admin/carManagement");
+      // setloading(false)
+    } catch (error) {
+      console.log(error);
+      //  setloading(false)
     }
   };
-  
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
-}
 
+  const rapidBrandName = (e) => {
+    console.log(e.target.value);
+    setQuery(e.target.value);
+    const options = {
+      method: "GET",
+      url: "https://car-data.p.rapidapi.com/cars",
+      params: { limit: "10", page: "0", make: `${e.target.value}` },
+      headers: {
+        "X-RapidAPI-Key": "c2509079abmsh8b7139668dd75fbp1f4faejsn6c5f4d8dd4ac",
+        "X-RapidAPI-Host": "car-data.p.rapidapi.com",
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function(response) {
+        console.log(response.data);
+        setCars(response.data);
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
     if (loc) {
@@ -124,12 +169,14 @@ const rapidBrandName = (e) => {
 
   return (
     <div>
-      <SideBar/>
+      <SideBar />
       {/* { */}
       {/* //    loading ? <Loading/> : */}
 
       <Container maxWidth="lg">
-        <Box sx={{ flexGrow: 1, paddingTop: 10, marginBottom: 10, marginLeft: 30 }}>
+        <Box
+          sx={{ flexGrow: 1, paddingTop: 10, marginBottom: 10, marginLeft: 30 }}
+        >
           <Paper elevation={5} style={{ padding: "5rem" }}>
             <div>
               <Typography variant="h4" component="h5">
@@ -140,8 +187,8 @@ const rapidBrandName = (e) => {
               onSubmit={handleSubmit(submitHandle)}
               encType="multipart/form-data"
             >
-                <Box>
-                  <Grid container>
+              <Box>
+                <Grid container>
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
                     <label
                       style={{ color: "red", fontSize: "12px" }}
@@ -157,20 +204,13 @@ const rapidBrandName = (e) => {
                       placeholder="Enter Name"
                       type="text"
                       name="brand"
-                      // {...register("brand", {
-                      //   required: "brand is required",
-                      //   minLength: { value: 2, message: "minimum length is 2" },
-                      // })}
+                      {...register("brand", {
+                        required: "brand is required",
+                        minLength: { value: 2, message: "minimum length is 2" },
+                      })}
                       onChange={(e) => rapidBrandName(e)}
                     />
-                   
-                      {/* <NativeSelect
-                id="demo-customized-select-native"
-                label="Brand Name"
-              >
-                <option aria-label="None" value="" />
-                <option>{data.make}</option>
-              </NativeSelect> */}
+
                   </Grid>
 
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
@@ -181,23 +221,21 @@ const rapidBrandName = (e) => {
                       {errors.model && errors.model.message}
                     </label>
                     <br />
-                    <TextField
-                      label="Model"
-                      placeholder="Enter Model"
-                      type="text"
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
                       name="model"
-                      {...register("model", {
-                        required: "model is required",
-                        minLength: { value: 2, message: "minimum length is 2" },
-                      })}
+                      // {...register("model", {
+                      //   required: "model is required",
+                      //   minLength: { value: 2, message: "minimum length is 2" },
+                      // })}
+                      options={cars.length > 0 && cars.map((obj) => obj.model)}
+                      sx={{ width: 220 }}
+                      
+                      renderInput={(params) => (
+                        <TextField {...params} label="Model" />
+                      )}
                     />
-                        {/* <NativeSelect
-                id="demo-customized-select-native"
-                label="Model Name"
-              >
-                <option aria-label="None" value="" />
-                <option>{data.model}</option>
-              </NativeSelect> */}
                   </Grid>
 
                   <Grid item md={6} xs={12} lg={4} marginTop={2}>
@@ -474,13 +512,17 @@ const rapidBrandName = (e) => {
                   </Grid>
                 </Grid>
 
-                <div> 
-                  <Button variant="contained" type="submit" value="submit" style={{float: 'right'}}>
+                <div>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    value="submit"
+                    style={{ float: "right" }}
+                  >
                     Submit
                   </Button>
                 </div>
               </Box>
-             
             </form>
           </Paper>
         </Box>

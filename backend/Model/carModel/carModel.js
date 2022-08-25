@@ -24,7 +24,6 @@ const CarModel = mongoose.Schema(
     },
     model: {
       type: String,
-      required: true,
     },
     fueltype: {
       type: String,
