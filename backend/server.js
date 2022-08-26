@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000
 const dbConnection = require('./db')
 const cors = require('cors');
 const path = require('path')
@@ -58,4 +57,5 @@ const errorHandler = (err,req,res,next) => {
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(5000,()=>console.log(`Server running on ${port}`));
+const port = process.env.PORT || 5000
+app.listen(port,()=>console.log(`Server running on ${port}`));
