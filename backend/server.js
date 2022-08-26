@@ -2,28 +2,16 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000
 const dbConnection = require('./db')
-require('dotenv').config()
 const cors = require('cors');
 const path = require('path')
 const adminRoute = require('./Routes/adminRoutes')
 const userRoute = require('./Routes/userRoutes')
+const dotenv = require('dotenv')
 
 
-//errror handling
-const notFound  = (req,res,next)=>{
-    const error  = new Error("Not Found");
-    res.status(404);
-    next(error);
-}
 
-const errorHandler = (err,req,res,next) => {
-    console.error(err);
-    const statusCode =  res.statusCode === 200 ? 500 : res.statusCode;
-    res.status(statusCode);
-    res.json({
-        message: err.message
-    })
-};
+
+dotenv.config()
 
 // middlewares
 app.use(express.json({limit: "30mb",extended:true}))
@@ -48,6 +36,24 @@ if (process.env.NODE_ENV === 'production') {
         res.status(200).send("Hellow Everybody..asdas..");
     });
 } 
+
+
+
+//errror handling
+const notFound  = (req,res,next)=>{
+    const error  = new Error("Not Found");
+    res.status(404);
+    next(error);
+}
+
+const errorHandler = (err,req,res,next) => {
+    console.error(err);
+    const statusCode =  res.statusCode === 200 ? 500 : res.statusCode;
+    res.status(statusCode);
+    res.json({
+        message: err.message
+    })
+};
 
 app.use(notFound);
 app.use(errorHandler);

@@ -1,6 +1,5 @@
 const User = require("../Model/userModel/userModel");
 const asyncHandler = require("express-async-handler");
-require('dotenv').config()
 const generateToken = require("../Unitl/jwt");
 const Razorpay = require('razorpay')
 const shortid = require("shortid");
@@ -13,7 +12,7 @@ const couponModel = require("../Model/couponModel/couponModel");
 const Review = require('../Model/reviewModel/reviewModel')
 
 
-var instance = new Razorpay({ key_id: process.env.RAZKEYID , key_secret: process.env.RAZSECRETKEY})
+var instance = new Razorpay({ key_id: "rzp_test_01xxpPseANbvFg" , key_secret: process.env.RAZSECRETKEY})
 
 const serviceSID =  process.env.SERVICESID
 const AccountSID = process.env.ACCOUNTSID
