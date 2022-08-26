@@ -1,4 +1,4 @@
-const Admin = require('../Model/AdminModel/adminModel')
+const Admin = require('../Model/adminModel/adminModel')
 const generateToken = require("../Unitl/jwt");
 const asyncHandler = require("express-async-handler");
 const User = require('../Model/userModel/userModel')
