@@ -12,7 +12,7 @@ const couponModel = require("../Model/couponModel/couponModel");
 const Review = require('../Model/reviewModel/reviewModel')
 
 
-var instance = new Razorpay({ key_id: "rzp_test_01xxpPseANbvFg" , key_secret: process.env.RAZSECRETKEY})
+var instance = new Razorpay({ key_id: process.env.RAZKEYID , key_secret: process.env.RAZSECRETKEY})
 
 const serviceSID =  process.env.SERVICESID
 const AccountSID = process.env.ACCOUNTSID
